@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -39,7 +37,7 @@ namespace IShop_Management.Views
             //var result = JsonConvert.DeserializeObject<List<JsonResult>>(p);
             //DataTable dt = (DataTable)JsonConvert.DeserializeObject(p, (typeof(JsonResult)));
             //DataTable dt = (DataTable)JsonConvert.DeserializeObject<JsonResult>(p);
-            string json = JsonConvert.SerializeObject(jsonResult);
+            //string json = JsonConvert.SerializeObject(jsonResult);
 
 
             //DGContent.ItemsSource = dt.DefaultView;
