@@ -30,10 +30,10 @@ namespace IShop_Management.Views
 
         private void FillDataGrid()
         {
-            using (LoginWindow.connection)
+            using (LoginView.connection)
             {
                 string showNewOrders = $"SELECT * FROM prd_description;";
-                SqlCommand cmd = new SqlCommand(showNewOrders, LoginWindow.connection);
+                SqlCommand cmd = new SqlCommand(showNewOrders, LoginView.connection);
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable("prd_description");
                 sda.Fill(dt);

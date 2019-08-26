@@ -31,10 +31,10 @@ namespace IShop_Management.Views
 
         private void FillDataGrid()
         {
-            using (LoginWindow.connection)
+            using (LoginView.connection)
             {
                 string showNewOrders = $"SELECT * FROM dbo.orders;";
-                SqlCommand cmd = new SqlCommand(showNewOrders, LoginWindow.connection);
+                SqlCommand cmd = new SqlCommand(showNewOrders, LoginView.connection);
                 SqlDataAdapter sda = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable("orders");
                 sda.Fill(dt);
@@ -66,6 +66,22 @@ namespace IShop_Management.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //OrderWindow orderEdit = new OrderWindow();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        {
+
+            IShop_Management.IShopDataSetOrders iShopDataSetOrders = ((IShop_Management.IShopDataSetOrders)(this.FindResource("iShopDataSetOrders")));
+            // Загрузить данные в таблицу orders. Можно изменить этот код как требуется.
+            IShop_Management.IShopDataSetOrdersTableAdapters.ordersTableAdapter iShopDataSetOrdersordersTableAdapter = new IShop_Management.IShopDataSetOrdersTableAdapters.ordersTableAdapter();
+            iShopDataSetOrdersordersTableAdapter.Fill(iShopDataSetOrders.orders);
+            System.Windows.Data.CollectionViewSource ordersViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("ordersViewSource")));
+            ordersViewSource.View.MoveCurrentToFirst();
         }
     }
 }
