@@ -42,11 +42,11 @@ namespace IShop_Management.Views
                 connection.Open();
 
                 SqlCommand checkCredentials = new SqlCommand(checkUserTypeSelect, connection);
-                userType = (int)checkCredentials.ExecuteScalar();
+                userType = (int?)checkCredentials.ExecuteScalar();
             }
             catch (SqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             finally
             {
@@ -61,30 +61,30 @@ namespace IShop_Management.Views
                 case 1:
                     //okWindow = new DirectorView();
                     okWindow.Show();
-                    this.Hide();
+                    this.Close();
                     break;
                 case 2:
-                    okWindow = new ManagerWindow();
+                    okWindow = new ManagerView();
                     okWindow.Show();
-                    this.Hide();
+                    this.Close();
                     break;
                 case 3:
                     okWindow = new ContentWindow();
                     okWindow.Show();
-                    this.Hide();
+                    this.Close();
                     break;
                 case 4:
                     //okWindow = new BuyerView();
                     okWindow.Show();
-                    this.Hide();
+                    this.Close();
                     break;
                 case 5:
                     //okWindow = new WarehouseView();
                     okWindow.Show();
-                    this.Hide();
+                    this.Close();
                     break;
                 default:
-                    MessageBox.Show(this, "Неправильное имя пользователя или пароль.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(this, "Неправильное имя пользователя или пароль.\nПовторите попытку или обратитесь к администратору.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     break;
             }
 

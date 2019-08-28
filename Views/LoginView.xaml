@@ -4,28 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IShop_Management.Views"
+        xmlns:controls="clr-namespace:IShop_Management.Views.Controls"
         mc:Ignorable="d"
         Title="IShop Management: Login" Height="334.406" Width="600"
         WindowStartupLocation="CenterScreen">
     <DockPanel>
         <!--Меню-->
-        <Menu DockPanel.Dock ="Top">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Экспорт" ></MenuItem>
-                <Separator />
-                <MenuItem Header="Выход" ></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Справка" >
-                <MenuItem Header="Содержание" ></MenuItem>
-                <MenuItem Header="О программе" ></MenuItem>
-            </MenuItem>
-        </Menu>
-        <!--Статус-->
-        <StatusBar DockPanel.Dock ="Bottom">
-            <StatusBarItem>
-                <TextBlock>Готово</TextBlock>
-            </StatusBarItem>
-        </StatusBar>
+        <controls:MainMenuControl DockPanel.Dock ="Top"/>
+        <!--Строка состояния-->
+        <controls:StatusBarControl DockPanel.Dock ="Bottom"/>
         <!--Ввод данных-->
         <Grid DockPanel.Dock="Top">
             <Grid.RowDefinitions>
@@ -34,11 +21,11 @@
             <TextBlock Height="36" HorizontalAlignment="Left" Margin="66,20,0,0" Name="textBlockHeading" VerticalAlignment="Top" FontSize="12" FontStyle="Italic" Padding="5">  
             Добро пожаловать. Введите, пожалуйста, личные имя пользователя и пароль.
             </TextBlock>
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,93,0,0" Name="textBlockLogin" Text="Имя пользователя" VerticalAlignment="Top" Width="128" />
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,144,0,0" Name="textBockPassword" Text="Пароль" VerticalAlignment="Top" Width="128" />
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="225,93,0,0" Name="textBoxLogin" VerticalAlignment="Top" Width="247" />
-            <PasswordBox Height="23" HorizontalAlignment="Left" Margin="225,144,0,0" Name="passwordBoxLogin" VerticalAlignment="Top" Width="247" />
-            <Button Content="Вход" Height="23" HorizontalAlignment="Left" Margin="66,201,0,0" Name="buttonLogin" VerticalAlignment="Top" Width="104" Click="buttonLogin_Click" />
+            <Label VerticalAlignment="Top" Margin="66,93,398,0">Имя пользователя</Label>
+            <Label VerticalAlignment="Top" Margin="66,141,398,0">Пароль</Label>
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="225,93,0,0" Name="textBoxLogin" VerticalAlignment="Top" Width="247" Text="fed_iv" />
+            <PasswordBox Height="23" HorizontalAlignment="Left" Margin="225,144,0,0" Name="passwordBoxLogin" VerticalAlignment="Top" Width="247" Password="fi123"/>
+            <Button Content="Вход" Height="23" HorizontalAlignment="Left" Margin="225,198,0,0" Name="buttonLogin" VerticalAlignment="Top" Width="104" Click="buttonLogin_Click" />
         </Grid>
     </DockPanel>
 </Window>
