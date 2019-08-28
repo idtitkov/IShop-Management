@@ -9,11 +9,11 @@
         <MenuItem Header="Файл">
             <MenuItem x:Name="Export" Header="Экспорт" ></MenuItem>
             <Separator />
-            <MenuItem Header="Выход" Click="MenuItemExit_Click" ></MenuItem>
+            <MenuItem Header="Выход" Click="menuItemExit_Click" ></MenuItem>
         </MenuItem>
         <MenuItem Header="Справка" >
             <MenuItem Header="Содержание" ></MenuItem>
-            <MenuItem Header="О программе" ></MenuItem>
+            <MenuItem Header="О программе" Click="menuItemAbout_Click"></MenuItem>
         </MenuItem>
     </Menu>
 </UserControl>

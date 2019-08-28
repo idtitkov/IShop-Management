@@ -25,9 +25,15 @@ namespace IShop_Management.Views.Controls
             InitializeComponent();
         }
 
-        public void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        public void menuItemExit_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void menuItemAbout_Click(object sender, RoutedEventArgs e)
+        {
+            AboutBox aboutBox = new AboutBox();
+            aboutBox.Show();
         }
     }
 }

@@ -67,14 +67,17 @@ namespace IShop_Management.ViewModels
                 });
             }
         }
+
         private void LoadNewOrders()
         {
             NewOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_is_new == true));
         }
+
         private void LoadActiveOrders()
         {
             ActiveOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_is_active == true));
         }
+
         private void LoadDeliveredOrders()
         {
             DeliveredOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_is_delivered == true));

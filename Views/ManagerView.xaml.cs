@@ -27,9 +27,6 @@ namespace IShop_Management.Views
         {
             InitializeComponent();
 
-            datePickerBegin.SelectedDateChanged += this.datePicker_SelectedDateChanged;
-            datePickerEnd.SelectedDateChanged += this.datePicker_SelectedDateChanged;
-
             LoadOrders();
         }
 
@@ -37,21 +34,6 @@ namespace IShop_Management.Views
         {
             orderViewModel = new OrderViewModel();
             DataContext = orderViewModel;
-        }
-
-        private void DataGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
-        {
-            DataGridRow dgr = dataGridNewOrders.ItemContainerGenerator.ContainerFromItem(dataGridNewOrders.SelectedItem) as DataGridRow;
-            DataRowView dr = (DataRowView)dgr.Item;
-
-            string ord_id = dr[0].ToString();
-            string ord_date_created = dr[6].ToString();
-
-            OrderWindow orderEdit = new OrderWindow(ord_id, ord_date_created);
-            orderEdit.Show();
-
-            //MessageBox.Show("You Clicked : \r\nName : " + ProductName + "\r\nDescription : " + ProductDescription);
-
         }
 
         private void datePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -67,6 +49,23 @@ namespace IShop_Management.Views
             dataGridActiveOrders.ItemsSource = orderViewModel.ActiveOrders;
             dataGridDeliveredOrders.ItemsSource = orderViewModel.DeliveredOrders;
             dataGridAllOrders.ItemsSource = orderViewModel.AllOrders;
+        }
+
+        private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            OrderView orderEdit = new OrderView();
+            orderEdit.Show();
+
+            //orderEdit.Show();
+
+            //DataGridRow dgr = dataGridNewOrders.ItemContainerGenerator.ContainerFromItem(dataGridNewOrders.SelectedItem) as DataGridRow;
+            //DataRowView dr = (DataRowView)dgr.Item;
+
+            //string ord_id = dr[0].ToString();
+            //string ord_date_created = dr[6].ToString();
+
+            //OrderWindow orderEdit = new OrderWindow(ord_id, ord_date_created);
+            //MessageBox.Show("You Clicked : \r\nName : " + ProductName + "\r\nDescription : " + ProductDescription);
         }
     }
 }

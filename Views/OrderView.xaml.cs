@@ -17,20 +17,14 @@ namespace IShop_Management.Views
     /// <summary>
     /// Логика взаимодействия для OrderWindow.xaml
     /// </summary>
-    public partial class OrderWindow : Window
+    public partial class OrderView : Window
     {
-        public OrderWindow(string a, string b)
+        public OrderView()
         {
             InitializeComponent();
 
-            LoadOrderInfo(a, b);
-
-        }
-
-        public void LoadOrderInfo(string oderNumber, string orderDateTime)
-        {
-            OderNumber.Text = oderNumber;
-            OrderDateTime.Text = orderDateTime;
+            this.ResizeMode = ResizeMode.NoResize;
+            
         }
     }
 }

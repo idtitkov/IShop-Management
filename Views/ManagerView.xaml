@@ -29,7 +29,7 @@
         <Grid DockPanel.Dock="Top">
             <TabControl>
                 <TabItem Header="Новые">
-                    <DataGrid x:Name="dataGridNewOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding NewOrders}" AutoGenerateColumns="False" CanUserAddRows="True">
+                    <DataGrid x:Name="dataGridNewOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding NewOrders}" AutoGenerateColumns="False" CanUserAddRows="True" MouseDoubleClick="dataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}" />
                             <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}"/>
@@ -41,7 +41,7 @@
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="В обработке">
-                    <DataGrid x:Name="dataGridActiveOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding ActiveOrders}" AutoGenerateColumns="False" CanUserAddRows="True">
+                    <DataGrid x:Name="dataGridActiveOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding ActiveOrders}" AutoGenerateColumns="False" CanUserAddRows="True" MouseDoubleClick="dataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}" />
                             <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}"/>
@@ -54,7 +54,7 @@
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="Доставленные">
-                    <DataGrid x:Name="dataGridDeliveredOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding DeliveredOrders}" AutoGenerateColumns="False" CanUserAddRows="True">
+                    <DataGrid x:Name="dataGridDeliveredOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding DeliveredOrders}" AutoGenerateColumns="False" CanUserAddRows="True" MouseDoubleClick="dataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}" />
                             <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}"/>
@@ -68,7 +68,7 @@
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="Все заказы">
-                    <DataGrid x:Name="dataGridAllOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding AllOrders}" AutoGenerateColumns="False" CanUserAddRows="True">
+                    <DataGrid x:Name="dataGridAllOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding AllOrders}" AutoGenerateColumns="False" CanUserAddRows="True" MouseDoubleClick="dataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}" />
                             <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}"/>
