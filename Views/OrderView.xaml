@@ -5,38 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IShop_Management.Views"
         mc:Ignorable="d"
-        Title="IShop: Информация о заказе" Height="600" Width="800"
+        Title="IShop: Информация о заказе" Height="560" Width="800"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <Label Content="Номер заказа" HorizontalAlignment="Left" Height="25" Margin="32,32,0,0" VerticalAlignment="Top" Width="87"/>
-        <TextBox x:Name="OderNumber" HorizontalAlignment="Left" Height="25" Margin="141,32,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="64" RenderTransformOrigin="1.295,1.277" IsReadOnly="True"/>
-        <Label Content="от" HorizontalAlignment="Left" Height="25" Margin="237,33,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.697,0.531"/>
-        <TextBox x:Name="OrderDateTime" HorizontalAlignment="Left" Height="25" Margin="289,32,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="113" IsReadOnly="True"/>
-        <Label Content="Email" HorizontalAlignment="Left" Height="24" Margin="507,72,0,0" VerticalAlignment="Top" Width="43"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="623,72,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="132" RenderTransformOrigin="0.77,0.483"/>
+        <Label Content="Номер заказа" HorizontalAlignment="Left" Height="25" Margin="32,32,0,0" VerticalAlignment="Top" Width="87" />
+        <TextBox x:Name="OderNumber" HorizontalAlignment="Left" Height="25" Margin="141,32,0,0" VerticalAlignment="Top" Width="53" IsReadOnly="True" Background="LightGray" Text="{Binding Path=Ord_id, Mode=TwoWay}"/>
+        <Label Content="от" HorizontalAlignment="Left" Height="25" Margin="210,32,0,0" VerticalAlignment="Top" Width="38"/>
+        <TextBox x:Name="OrderDateTime" HorizontalAlignment="Left" Height="25" Margin="248,32,0,0" VerticalAlignment="Top" Width="99" IsReadOnly="True" Background="LightGray" Text="{Binding Path=Ord_date_created, StringFormat=\{0:dd.MM.yyyy\}}"/>
+        <Label Content="Email" HorizontalAlignment="Left" Height="24" Margin="369,32,0,0" VerticalAlignment="Top" Width="43"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="426,32,0,0" Text="test@mail.ru" IsReadOnly="True" Background="LightGray" VerticalAlignment="Top" Width="98"/>
+        <Label Content="Статус документа" HorizontalAlignment="Left" Margin="546,32,0,0" VerticalAlignment="Top" Height="24"/>
+        <ComboBox x:Name="ComboBoxOrderStatus" HorizontalAlignment="Left" Height="24" Margin="657,32,0,0" VerticalAlignment="Top" Width="98" SelectedIndex="{Binding Path=Ord_status, Mode=TwoWay}" RenderTransformOrigin="1.102,0.5">
+            <ComboBoxItem Name="OrderIsNew">Новый</ComboBoxItem>
+            <ComboBoxItem Name="OrderIsActive">В обработке</ComboBoxItem>
+            <ComboBoxItem Name="OrderIsDelivered">Доставлен</ComboBoxItem>
+        </ComboBox>
         <Label Content="Номер телефона" HorizontalAlignment="Left" Height="29" Margin="32,72,0,0" VerticalAlignment="Top" Width="104"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="141,72,0,0" TextWrapping="Wrap" Text="375296218038" VerticalAlignment="Top" Width="86" RenderTransformOrigin="0.742,-0.048"/>
-        <Label Content="Имя" HorizontalAlignment="Left" Height="24" Margin="237,72,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="0.027,0.527"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="289,72,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="193" RenderTransformOrigin="-0.077,0.433"/>
-        <Label Content="Статус документа" HorizontalAlignment="Left" Margin="507,33,0,0" VerticalAlignment="Top" Height="24"/>
-        <ComboBox HorizontalAlignment="Left" Height="24" Margin="623,33,0,0" VerticalAlignment="Top" Width="132"/>
-        <Label Content="Адрес" HorizontalAlignment="Left" Height="24" Margin="32,112,0,0" VerticalAlignment="Top" Width="93"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="141,112,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="614"/>
-        <Label Content="Комментарий" HorizontalAlignment="Left" Height="24" Margin="32,152,0,0" VerticalAlignment="Top" Width="135"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="141,152,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="614"/>
-        <DataGrid x:Name="dataGridOrderProduct" IsReadOnly="True" ItemsSource="{Binding DeliveredOrders}" AutoGenerateColumns="False" CanUserAddRows="True" Margin="32,190,37,172">
+        <TextBox x:Name="OrderTel" HorizontalAlignment="Left" Height="24" Margin="141,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" Text="{Binding Path=Ord_tel, Mode=TwoWay}"/>
+        <Label Content="Имя" HorizontalAlignment="Left" Height="24" Margin="237,72,0,0" VerticalAlignment="Top" Width="38"/>
+        <TextBox x:Name="OrderName" HorizontalAlignment="Left" Height="24" Margin="289,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235" Text="{Binding Path=Ord_name, Mode=TwoWay}"/>
+        <Label Content="Сумма заказа" HorizontalAlignment="Left" Margin="546,72,0,0" VerticalAlignment="Top"/>
+        <Label Content="$$$" HorizontalAlignment="Left" Margin="657,72,0,0" VerticalAlignment="Top" Width="98"/>
+        <Label Content="Адрес" HorizontalAlignment="Left" Height="24" Margin="32,112,0,0" VerticalAlignment="Top" Width="104"/>
+        <TextBox x:Name="OrderAddress" HorizontalAlignment="Left" Height="24" Margin="141,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="614" Text="{Binding Path=Ord_address, Mode=TwoWay}"/>
+        <Label Content="Комментарий" HorizontalAlignment="Left" Height="24" Margin="32,152,0,0" VerticalAlignment="Top" Width="104"/>
+        <TextBox x:Name="OrderComments" HorizontalAlignment="Left" Height="24" Margin="141,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="614" Text="{Binding Path=Ord_comments, Mode=TwoWay}"/>
+        <DataGrid x:Name="dataGridOrderProduct" Height="Auto" Width="Auto" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="32,192,37,170">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Код товара" Binding="{Binding Path='Ord_id'}" />
-                <DataGridTextColumn Header="Название" Binding="{Binding Path='Ord_name'}"/>
-                <DataGridTextColumn Header="Цена за 1 шт." Binding="{Binding Path='Ord_address'}"/>
-                <DataGridTextColumn Header="Цена общая" Binding="{Binding Path='Ord_comments'}"/>
-                <DataGridTextColumn Header="Количество" Binding="{Binding Path='Ord_tel'}"/>
+                <DataGridTextColumn Header="Код товара" IsReadOnly="True" Binding="{Binding 'prd_id'}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Название" Binding="{Binding 'prd_name'}"/>
+                <DataGridTextColumn Header="Цена за 1 шт." IsReadOnly="True" Binding="{Binding 'prd_price_out'}"/>
+                <DataGridTextColumn Header="Количество" IsReadOnly="False" Binding="{Binding 'op_qty'}"/>
+                <DataGridTextColumn Header="Цена общая" IsReadOnly="True" Binding="{Binding}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Добавить товар" HorizontalAlignment="Left" Height="24" Margin="32,414,0,0" VerticalAlignment="Top" Width="104"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="151,418,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="97" RenderTransformOrigin="0.492,-0.292"/>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="278,418,0,0" VerticalAlignment="Top" Width="75" Height="24" RenderTransformOrigin="0.333,0.625"/>
-        <Button Content="Сохранить" HorizontalAlignment="Left" Margin="141,472,0,0" VerticalAlignment="Top" Width="75" Height="24"/>
-        <Button Content="Отмена" HorizontalAlignment="Left" Margin="523,472,0,0" VerticalAlignment="Top" Width="75" Height="24" RenderTransformOrigin="0.507,0.667"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="151,418,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="97"/>
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="278,418,0,0" VerticalAlignment="Top" Width="75" Height="24"/>
+        <Button Content="Сохранить" HorizontalAlignment="Left" Margin="141,472,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="SaveButton_Click"/>
+        <Button Content="Отмена" HorizontalAlignment="Left" Margin="523,472,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="CancelButton_Click"/>
     </Grid>
 </Window>

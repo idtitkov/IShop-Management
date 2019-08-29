@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IShop_Management.Models
 {
-    class Product
+    public class Product
     {
         public int Prd_id { get; set; }
         public string Prd_name { get; set; }

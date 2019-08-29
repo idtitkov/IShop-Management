@@ -1,4 +1,5 @@
-﻿using IShop_Management.ViewModels;
+﻿using IShop_Management.Models;
+using IShop_Management.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -36,7 +37,7 @@ namespace IShop_Management.Views
             DataContext = orderViewModel;
         }
 
-        private void datePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        public void datePicker_SelectedDateChanged(object sender, RoutedEventArgs e)
         {
             dataGridNewOrders.ItemsSource = null;
             dataGridActiveOrders.ItemsSource = null;
@@ -53,19 +54,17 @@ namespace IShop_Management.Views
 
         private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            OrderView orderEdit = new OrderView();
-            orderEdit.Show();
+            DataGrid grid = sender as DataGrid;
+            DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
 
-            //orderEdit.Show();
+            if (dgr != null)
+            {
+                Order ord = (Order)dgr.Item;
 
-            //DataGridRow dgr = dataGridNewOrders.ItemContainerGenerator.ContainerFromItem(dataGridNewOrders.SelectedItem) as DataGridRow;
-            //DataRowView dr = (DataRowView)dgr.Item;
+                OrderView orderEdit = new OrderView(ord, orderViewModel, this);
 
-            //string ord_id = dr[0].ToString();
-            //string ord_date_created = dr[6].ToString();
-
-            //OrderWindow orderEdit = new OrderWindow(ord_id, ord_date_created);
-            //MessageBox.Show("You Clicked : \r\nName : " + ProductName + "\r\nDescription : " + ProductDescription);
+                orderEdit.Show();
+            }
         }
     }
 }

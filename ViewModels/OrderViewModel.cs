@@ -3,22 +3,30 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Linq;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using IShop_Management.Models;
 using IShop_Management.Views;
 
 namespace IShop_Management.ViewModels
 {
-    class OrderViewModel : INotifyPropertyChanged
+    public class OrderViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Order> AllOrders { get; set; }
         public ObservableCollection<Order> NewOrders { get; set; }
         public ObservableCollection<Order> ActiveOrders { get; set; }
         public ObservableCollection<Order> DeliveredOrders { get; set; }
+
+        public SqlDataAdapter sda;
+        public DataTable dt;
 
         private DateTime _beginDate = DateTime.Today;
         private DateTime _endDate = DateTime.Today;
@@ -27,6 +35,7 @@ namespace IShop_Management.ViewModels
         {
             Refresh();
         }
+
         public void Refresh()
         {
             AllOrders = null;
@@ -41,46 +50,104 @@ namespace IShop_Management.ViewModels
         {
             string loadAllOrders = $"SELECT * FROM dbo.orders WHERE Ord_date_created >= '{_beginDate}' AND Ord_date_created <= '{_endDate}';";
             SqlCommand cmd = new SqlCommand(loadAllOrders, LoginView.connection);
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            sda.Fill(ds, "orders");
+            sda = new SqlDataAdapter(cmd);
+            dt = new DataTable();
+            sda.Fill(dt);
 
-            if (AllOrders == null)
-                AllOrders = new ObservableCollection<Order>();
+            AllOrders = new ObservableCollection<Order>();
 
-            foreach (DataRow dr in ds.Tables[0].Rows)
+            foreach (DataRow dr in dt.Rows)
             {
                 AllOrders.Add(new Order
                 {
                     Ord_id = Convert.ToInt32(dr[0]),
-                    Cli_id = dr[1] as int?,
-                    Ord_name = dr[2].ToString(),
-                    Ord_tel = dr[3].ToString(),
-                    Ord_address = dr[4].ToString(),
-                    Ord_comments = dr[5].ToString(),
-                    Ord_date_created = Convert.ToDateTime(dr[6]),
-                    Ord_is_new = Convert.ToBoolean(dr[7]),
-                    Ord_is_active = Convert.ToBoolean(dr[8]),
-                    Ord_is_delivered = Convert.ToBoolean(dr[9]),
-                    Cur_id = dr[10] as int?,
-                    Ord_date_delivereed = dr[4] as DateTime?
+                    Ord_name = dr[1].ToString(),
+                    Ord_tel = dr[2].ToString(),
+                    Ord_address = dr[3].ToString(),
+                    Ord_comments = dr[4].ToString(),
+                    Ord_date_created = Convert.ToDateTime(dr[5]),
+                    Ord_status = Convert.ToInt32(dr[6]),
+                    Cur_id = Convert.ToInt32(dr[7]),
+                    Ord_date_delivereed = dr[8] as DateTime?
                 });
             }
         }
 
         private void LoadNewOrders()
         {
-            NewOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_is_new == true));
+            NewOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_status == 0));
         }
 
         private void LoadActiveOrders()
         {
-            ActiveOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_is_active == true));
+            ActiveOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_status == 1));
         }
 
         private void LoadDeliveredOrders()
         {
-            DeliveredOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_is_delivered == true));
+            DeliveredOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_status == 2));
+        }
+
+        // Возможный вариант сохранения
+        public void SaveChanges()
+        {
+            sda.UpdateCommand = new SqlCommandBuilder(sda).GetUpdateCommand();
+
+            DataTable dt2 = new DataTable();
+            dt2 = ToDataTable<Order>(AllOrders);
+            dt2.PrimaryKey = new DataColumn[] { dt2.Columns["ord_id"] };
+            sda.Update(dt2);
+        }
+
+        // Конвертер
+        public DataTable ToDataTable<T>(ObservableCollection<T> items)
+        {
+            var tb = new DataTable(typeof(T).Name);
+
+            PropertyInfo[] props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (PropertyInfo prop in props)
+            {
+                Type t = GetCoreType(prop.PropertyType);
+                tb.Columns.Add(prop.Name, t);
+            }
+
+            foreach (T item in items)
+            {
+                var values = new object[props.Length];
+
+                for (int i = 0; i < props.Length; i++)
+                {
+                    values[i] = props[i].GetValue(item, null);
+                }
+
+                tb.Rows.Add(values);
+            }
+            return tb;
+        }
+
+        public static bool IsNullable(Type t)
+        {
+            return !t.IsValueType || (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>));
+        }
+
+        public static Type GetCoreType(Type t)
+        {
+            if (t != null && IsNullable(t))
+            {
+                if (!t.IsValueType)
+                {
+                    return t;
+                }
+                else
+                {
+                    return Nullable.GetUnderlyingType(t);
+                }
+            }
+            else
+            {
+                return t;
+            }
         }
 
         public DateTime BeginDate

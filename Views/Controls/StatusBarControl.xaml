@@ -7,7 +7,7 @@
              mc:Ignorable="d">
     <StatusBar>
         <StatusBarItem>
-            <TextBlock>Соединение с базой данных: Ok</TextBlock>
+            <TextBlock>Готово</TextBlock>
         </StatusBarItem>
     </StatusBar>
 </UserControl>

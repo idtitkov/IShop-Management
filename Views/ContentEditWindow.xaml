@@ -7,7 +7,37 @@
         mc:Ignorable="d"
         Title="ContentEditWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="DGContent" HorizontalAlignment="Left" Height="331" Margin="36,30,0,0" VerticalAlignment="Top" Width="694"/>
+        <DataGrid x:Name="DocumentGrid" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Document"/>
+                <DataGridTemplateColumn Header="Group       Field      FieldType  IsRequired">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DataGrid x:Name="dgInner" ItemsSource="{Binding Groups}" AutoGenerateColumns="False"  GridLinesVisibility="None" BorderThickness="0" HeadersVisibility="None">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Group" Binding="{Binding Name}"/>
 
+                                    <DataGridTemplateColumn Header="Field">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <DataGrid x:Name="dgInnerInner" ItemsSource="{Binding Fields}" AutoGenerateColumns="False" GridLinesVisibility="None"  BorderThickness="0" HeadersVisibility="None">
+
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Header="Field" Binding="{Binding Name}"/>
+                                                        <DataGridTextColumn Header="FieldType" Binding="{Binding FieldType}"/>
+                                                        <DataGridTextColumn Header="IsRequired" Binding="{Binding IsRequired}"/>
+                                                    </DataGrid.Columns>
+
+                                                </DataGrid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
