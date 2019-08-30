@@ -13,7 +13,7 @@
         <Label Content="от" HorizontalAlignment="Left" Height="25" Margin="210,32,0,0" VerticalAlignment="Top" Width="38"/>
         <TextBox x:Name="OrderDateTime" HorizontalAlignment="Left" Height="25" Margin="248,32,0,0" VerticalAlignment="Top" Width="99" IsReadOnly="True" Background="LightGray" Text="{Binding Path=Ord_date_created, StringFormat=\{0:dd.MM.yyyy\}}"/>
         <Label Content="Email" HorizontalAlignment="Left" Height="24" Margin="369,32,0,0" VerticalAlignment="Top" Width="43"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="426,32,0,0" Text="test@mail.ru" IsReadOnly="True" Background="LightGray" VerticalAlignment="Top" Width="98"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="426,32,0,0" IsReadOnly="True" Background="LightGray" VerticalAlignment="Top" Width="98" Text="{Binding Path=Ord_email, Mode=TwoWay}"/>
         <Label Content="Статус документа" HorizontalAlignment="Left" Margin="546,32,0,0" VerticalAlignment="Top" Height="24"/>
         <ComboBox x:Name="ComboBoxOrderStatus" HorizontalAlignment="Left" Height="24" Margin="657,32,0,0" VerticalAlignment="Top" Width="98" SelectedIndex="{Binding Path=Ord_status, Mode=TwoWay}" RenderTransformOrigin="1.102,0.5">
             <ComboBoxItem Name="OrderIsNew">Новый</ComboBoxItem>
@@ -25,23 +25,24 @@
         <Label Content="Имя" HorizontalAlignment="Left" Height="24" Margin="237,72,0,0" VerticalAlignment="Top" Width="38"/>
         <TextBox x:Name="OrderName" HorizontalAlignment="Left" Height="24" Margin="289,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235" Text="{Binding Path=Ord_name, Mode=TwoWay}"/>
         <Label Content="Сумма заказа" HorizontalAlignment="Left" Margin="546,72,0,0" VerticalAlignment="Top"/>
-        <Label Content="$$$" HorizontalAlignment="Left" Margin="657,72,0,0" VerticalAlignment="Top" Width="98"/>
+        <Label x:Name="labelOrderCost" HorizontalAlignment="Left" Margin="657,72,0,0" VerticalAlignment="Top" Width="98" Content="{Binding OrderCost, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Content="Адрес" HorizontalAlignment="Left" Height="24" Margin="32,112,0,0" VerticalAlignment="Top" Width="104"/>
         <TextBox x:Name="OrderAddress" HorizontalAlignment="Left" Height="24" Margin="141,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="614" Text="{Binding Path=Ord_address, Mode=TwoWay}"/>
         <Label Content="Комментарий" HorizontalAlignment="Left" Height="24" Margin="32,152,0,0" VerticalAlignment="Top" Width="104"/>
         <TextBox x:Name="OrderComments" HorizontalAlignment="Left" Height="24" Margin="141,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="614" Text="{Binding Path=Ord_comments, Mode=TwoWay}"/>
-        <DataGrid x:Name="dataGridOrderProduct" Height="Auto" Width="Auto" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="32,192,37,170">
+        <DataGrid x:Name="dataGridOrderProduct" Height="Auto" Width="Auto" AutoGenerateColumns="False" CanUserAddRows="False" Margin="32,192,37,170" ItemsSource="{Binding}" PreviewKeyDown="dataGridOrderProduct_PreviewKeyDown">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Код товара" IsReadOnly="True" Binding="{Binding 'prd_id'}"/>
-                <DataGridTextColumn IsReadOnly="True" Header="Название" Binding="{Binding 'prd_name'}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Название" Binding="{Binding 'prd_name'}" Width="250"/>
                 <DataGridTextColumn Header="Цена за 1 шт." IsReadOnly="True" Binding="{Binding 'prd_price_out'}"/>
-                <DataGridTextColumn Header="Количество" IsReadOnly="False" Binding="{Binding 'op_qty'}"/>
-                <DataGridTextColumn Header="Цена общая" IsReadOnly="True" Binding="{Binding}"/>
+                <DataGridTextColumn x:Name="TotalPrice" Header="Количество" IsReadOnly="False" Binding="{Binding 'op_qty'}"/>
+                <DataGridTextColumn Header="Цена общая" IsReadOnly="True" Binding="{Binding 'summ'}"/>
+                <DataGridTextColumn Header="Количество на складе" IsReadOnly="True" Binding="{Binding 'prd_qty'}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Добавить товар" HorizontalAlignment="Left" Height="24" Margin="32,414,0,0" VerticalAlignment="Top" Width="104"/>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="151,418,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="97"/>
-        <Button Content="Добавить" HorizontalAlignment="Left" Margin="278,418,0,0" VerticalAlignment="Top" Width="75" Height="24"/>
+        <TextBox x:Name="textBox_AddProduct" HorizontalAlignment="Left" Height="24" Margin="151,418,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="97"/>
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="278,418,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="AddByProdId_Click"/>
         <Button Content="Сохранить" HorizontalAlignment="Left" Margin="141,472,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="SaveButton_Click"/>
         <Button Content="Отмена" HorizontalAlignment="Left" Margin="523,472,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="CancelButton_Click"/>
     </Grid>

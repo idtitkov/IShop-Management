@@ -66,5 +66,23 @@ namespace IShop_Management.Views
                 orderEdit.Show();
             }
         }
+
+        private void ButtonNewOrder_Click(object sender, RoutedEventArgs e)
+        {
+            // Получение номера заказа
+            string getNewOrdId = $"SELECT MAX(ord_id) FROM dbo.orders;";
+            SqlCommand sqlGetNewOrdId = new SqlCommand(getNewOrdId, LoginView.connection);
+            if (LoginView.connection.State == ConnectionState.Closed)
+                LoginView.connection.Open();
+
+            // Открытие пустого заказа с новым номером
+            Order ord = new Order();
+            ord.Ord_id = Convert.ToInt32(sqlGetNewOrdId.ExecuteScalar());
+            ord.Ord_id++;
+            ord.Ord_date_created = DateTime.Now;
+
+            OrderView orderEdit = new OrderView(ord, orderViewModel, this);
+            orderEdit.Show();
+        }
     }
 }

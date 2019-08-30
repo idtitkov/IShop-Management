@@ -48,7 +48,7 @@ namespace IShop_Management.ViewModels
 
         public void LoadAllOrders()
         {
-            string loadAllOrders = $"SELECT * FROM dbo.orders WHERE Ord_date_created >= '{_beginDate}' AND Ord_date_created <= '{_endDate}';";
+            string loadAllOrders = $"SELECT * FROM dbo.orders WHERE Ord_date_created >= '{_beginDate}' AND Ord_date_created < '{_endDate.AddDays(1)}';";
             SqlCommand cmd = new SqlCommand(loadAllOrders, LoginView.connection);
             sda = new SqlDataAdapter(cmd);
             dt = new DataTable();
@@ -64,11 +64,12 @@ namespace IShop_Management.ViewModels
                     Ord_name = dr[1].ToString(),
                     Ord_tel = dr[2].ToString(),
                     Ord_address = dr[3].ToString(),
-                    Ord_comments = dr[4].ToString(),
-                    Ord_date_created = Convert.ToDateTime(dr[5]),
-                    Ord_status = Convert.ToInt32(dr[6]),
-                    Cur_id = Convert.ToInt32(dr[7]),
-                    Ord_date_delivereed = dr[8] as DateTime?
+                    Ord_email = dr[4].ToString(),
+                    Ord_comments = dr[5].ToString(),
+                    Ord_date_created = Convert.ToDateTime(dr[6]),
+                    Ord_status = Convert.ToInt32(dr[7]),
+                    Cur_id = Convert.ToInt32(dr[8]),
+                    Ord_date_delivereed = dr[9] as DateTime?
                 });
             }
         }

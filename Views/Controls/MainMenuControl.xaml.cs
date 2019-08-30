@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,18 @@ namespace IShop_Management.Views.Controls
         {
             AboutBox aboutBox = new AboutBox();
             aboutBox.Show();
+        }
+
+        private void helpItemAbout_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("IShopHelp.html");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Window.GetWindow(this), "Не удается найти справочный файл\nПоместите файл \"IShopHelp.html\" в папку с программой.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }

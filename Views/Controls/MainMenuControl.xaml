@@ -12,8 +12,8 @@
             <MenuItem Header="Выход" Click="menuItemExit_Click" ></MenuItem>
         </MenuItem>
         <MenuItem Header="Справка" >
-            <MenuItem Header="Содержание" ></MenuItem>
-            <MenuItem Header="О программе" Click="menuItemAbout_Click"></MenuItem>
+            <MenuItem Header="Содержание" Click="helpItemAbout_Click" />
+            <MenuItem Header="О программе" Click="menuItemAbout_Click"/>
         </MenuItem>
     </Menu>
 </UserControl>

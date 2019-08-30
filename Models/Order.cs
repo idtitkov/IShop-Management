@@ -14,6 +14,7 @@ namespace IShop_Management.Models
         private string ord_name;
         private string ord_tel;
         private string ord_address;
+        private string ord_email;
         private string ord_comments;
         private DateTime ord_date_created;
         private int ord_status;
@@ -52,6 +53,15 @@ namespace IShop_Management.Models
             set
             {
                 ord_address = value;
+                OnPropertyChanged("Ord_address");
+            }
+        }
+        public string Ord_email
+        {
+            get { return ord_email; }
+            set
+            {
+                ord_email = value;
                 OnPropertyChanged("Ord_address");
             }
         }

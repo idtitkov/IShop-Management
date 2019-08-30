@@ -23,8 +23,8 @@
             </TextBlock>
             <Label VerticalAlignment="Top" Margin="66,93,398,0">Имя пользователя</Label>
             <Label VerticalAlignment="Top" Margin="66,141,398,0">Пароль</Label>
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="225,93,0,0" Name="textBoxLogin" VerticalAlignment="Top" Width="247" Text="fed_iv" />
-            <PasswordBox Height="23" HorizontalAlignment="Left" Margin="225,144,0,0" Name="passwordBoxLogin" VerticalAlignment="Top" Width="247" Password="fi123"/>
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="225,93,0,0" Name="textBoxLogin" VerticalAlignment="Top" Width="247" Text="iv_fed" />
+            <PasswordBox Height="23" HorizontalAlignment="Left" Margin="225,144,0,0" Name="passwordBoxLogin" VerticalAlignment="Top" Width="247" Password="if123"/>
             <Button Content="Вход" Height="23" HorizontalAlignment="Left" Margin="225,198,0,0" Name="buttonLogin" VerticalAlignment="Top" Width="104" Click="buttonLogin_Click" />
         </Grid>
     </DockPanel>

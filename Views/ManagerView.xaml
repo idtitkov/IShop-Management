@@ -16,14 +16,14 @@
         <controls:StatusBarControl DockPanel.Dock ="Bottom"/>
         <!--Тулбар-->
         <ToolBar DockPanel.Dock ="Top">
-            <Button Content="Новый заказ"></Button>
+            <Button Content="Новый заказ" Click="ButtonNewOrder_Click"/>
             <Separator />
             <Label>Показывать заказы с</Label>
             <DatePicker Name="datePickerBegin" IsDropDownOpen="False" SelectedDateFormat="Short" SelectedDate="{Binding BeginDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedDateChanged="datePicker_SelectedDateChanged"/>
             <Label>по</Label>
             <DatePicker Name="datePickerEnd" IsDropDownOpen="False" SelectedDateFormat="Short" SelectedDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedDateChanged="datePicker_SelectedDateChanged"/>
             <Separator />
-            <TextBox Foreground="LightGray" Width="250">Поиск по номеру телефона или адресу...</TextBox>
+            <!--<TextBox Foreground="LightGray" Width="250">Поиск по номеру телефона или адресу...</TextBox>-->
         </ToolBar>
         <!--Содержимое окна-->
         <Grid DockPanel.Dock="Top">
@@ -31,10 +31,10 @@
                 <TabItem Header="Новые">
                     <DataGrid x:Name="dataGridNewOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding NewOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="True" MouseDoubleClick="dataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}" />
-                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}"/>
-                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}"/>
+                            <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="120"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="100"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="120"/>
                             <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}"/>
                             <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
                         </DataGrid.Columns>
@@ -43,40 +43,39 @@
                 <TabItem Header="В обработке">
                     <DataGrid x:Name="dataGridActiveOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding ActiveOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="True" MouseDoubleClick="dataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}" />
-                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}"/>
-                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}"/>
-                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}"/>
-                            <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
-                            <DataGridTextColumn Header="Имя курьера" Binding="{Binding Path='Cur_id'}"/>
+                            <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="120"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="100"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="120"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="120"/>
+                            <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}" Width="100"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="Доставленные">
                     <DataGrid x:Name="dataGridDeliveredOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding DeliveredOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="True" MouseDoubleClick="dataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}" />
-                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}"/>
-                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}"/>
-                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}"/>
+                            <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="110"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="90"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="100"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="120"/>
                             <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
-                            <DataGridTextColumn Header="Имя курьера" Binding="{Binding Path='Cur_id'}"/>
+                            <DataGridTextColumn Header="Номер курьера" Binding="{Binding Path='Cur_id'}"/>
                             <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivereed', StringFormat=\{0:dd.MM.yyyy\}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="Все заказы">
-                    <DataGrid x:Name="dataGridAllOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding AllOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="True"  MouseDoubleClick="dataGrid_MouseDoubleClick">
+                    <DataGrid x:Name="dataGridAllOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding AllOrders, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="True"  MouseDoubleClick="dataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}" />
-                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}"/>
-                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}"/>
+                            <DataGridTextColumn Header="Номер заказа" Binding="{Binding Path='Ord_id'}"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="110"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="90"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="100"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="120"/>
                             <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
-                            <DataGridTextColumn Header="Имя курьера" Binding="{Binding Path='Cur_id'}"/>
+                            <DataGridTextColumn Header="Номер курьера" Binding="{Binding Path='Cur_id'}"/>
                             <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivereed', StringFormat=\{0:dd.MM.yyyy\}}"/>
                         </DataGrid.Columns>
                     </DataGrid>

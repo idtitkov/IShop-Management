@@ -206,5 +206,10 @@
   <ItemGroup>
     <Resource Include="IShop_icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="IShopHelp.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
