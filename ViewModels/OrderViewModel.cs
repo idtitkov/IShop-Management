@@ -68,7 +68,7 @@ namespace IShop_Management.ViewModels
                     Ord_date_created = Convert.ToDateTime(dr[6]),
                     Ord_status = Convert.ToInt32(dr[7]),
                     Cur_id = Convert.ToInt32(dr[8]),
-                    Ord_date_delivereed = dr[9] as DateTime?
+                    Ord_date_delivered = dr[9] as DateTime?
                 });
             }
         }

@@ -28,26 +28,30 @@ namespace IShop_Management.Views
         {
             InitializeComponent();
 
+            orderViewModel = new OrderViewModel();
+            DataContext = orderViewModel;
+
             LoadOrders();
         }
 
         public void LoadOrders()
         {
-            orderViewModel = new OrderViewModel();
-            DataContext = orderViewModel;
-        }
-
-        public void datePicker_SelectedDateChanged(object sender, RoutedEventArgs e)
-        {
             dgWActiveOrders.ItemsSource = null;
+            dgWCanceledOrders.ItemsSource = null;
             dgWDeliveredOrders.ItemsSource = null;
             dgWAllOrders.ItemsSource = null;
 
             orderViewModel.Refresh();
 
             dgWActiveOrders.ItemsSource = orderViewModel.ActiveOrders;
+            dgWCanceledOrders.ItemsSource = orderViewModel.CanceledOrders;
             dgWDeliveredOrders.ItemsSource = orderViewModel.DeliveredOrders;
             dgWAllOrders.ItemsSource = orderViewModel.AllOrders;
+        }
+
+        public void datePicker_SelectedDateChanged(object sender, RoutedEventArgs e)
+        {
+            LoadOrders();
         }
 
         private void dgWarehouse_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -59,30 +63,14 @@ namespace IShop_Management.Views
             {
                 Order ord = (Order)dgr.Item;
 
-                //OrderView orderEdit = new OrderView(ord, orderViewModel, this);
-
-                //orderEdit.Show();
+                CourierView orderEdit = new CourierView(ord);
+                orderEdit.Show();
             }
         }
 
-        private void ButtonNewOrder_Click(object sender, RoutedEventArgs e)
+        private void WindowActivated(object sender, EventArgs e)
         {
-            // Получение номера заказа
-            string getNewOrdId = $"SELECT MAX(ord_id) FROM dbo.orders;";
-            SqlCommand sqlGetNewOrdId = new SqlCommand(getNewOrdId, LoginView.connection);
-            if (LoginView.connection.State == ConnectionState.Closed)
-                LoginView.connection.Open();
-
-            // Открытие пустого заказа с новым номером
-            Order ord = new Order();
-            ord.Ord_id = Convert.ToInt32(sqlGetNewOrdId.ExecuteScalar());
-            ord.Ord_id++;
-            ord.Ord_date_created = DateTime.Now;
-
-            //OrderView orderEdit = new OrderView(ord, orderViewModel, this);
-            //orderEdit.Show();
+            LoadOrders();
         }
-
-
     }
 }

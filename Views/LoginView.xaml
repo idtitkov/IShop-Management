@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:IShop_Management.Views"
         xmlns:controls="clr-namespace:IShop_Management.Views.Controls"
         mc:Ignorable="d"
-        Title="IShop Management: Login" Height="334.406" Width="600"
+        Title="IShop Management: Логин" Height="334.406" Width="600"
         WindowStartupLocation="CenterScreen">
     <DockPanel>
         <!--Меню-->
-        <controls:MainMenuControl DockPanel.Dock ="Top"/>
+        <controls:MainMenuControl x:Name="mainMenuControl" DockPanel.Dock ="Top"/>
         <!--Строка состояния-->
         <controls:StatusBarControl DockPanel.Dock ="Bottom"/>
         <!--Ввод данных-->
@@ -23,7 +23,7 @@
             </TextBlock>
             <Label VerticalAlignment="Top" Margin="66,93,398,0">Имя пользователя</Label>
             <Label VerticalAlignment="Top" Margin="66,141,398,0">Пароль</Label>
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="225,93,0,0" Name="textBoxLogin" VerticalAlignment="Top" Width="247" Text="sales" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="225,93,0,0" Name="textBoxLogin" VerticalAlignment="Top" Width="247" Text="sklad" />
             <PasswordBox Height="23" HorizontalAlignment="Left" Margin="225,144,0,0" Name="passwordBoxLogin" VerticalAlignment="Top" Width="247" Password="123"/>
             <Button Content="Вход" Height="23" HorizontalAlignment="Left" Margin="225,198,0,0" Name="buttonLogin" VerticalAlignment="Top" Width="104" Click="buttonLogin_Click" />
         </Grid>

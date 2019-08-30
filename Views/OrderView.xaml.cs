@@ -24,9 +24,9 @@ namespace IShop_Management.Views
     /// </summary>
     public partial class OrderView : Window, INotifyPropertyChanged
     {
+        // Инициализтуем окно информацией их заказа
         Order order;
-        OrderViewModel orderViewModel;
-        ManagerView managerView;
+
         /*Datasets-Datatables*/
         SqlDataAdapter m2m_orders_products_sda;
         DataTable m2m_orders_products_dt;
@@ -34,31 +34,22 @@ namespace IShop_Management.Views
 
         /*Summ Property*/
         private double _orderCost;
-        public double OrderCost
-        {
-            get { return _orderCost; }
-            set
-            {
-                _orderCost = value;
-                OnPropertyChanged("OrderCost");
-            }
-        }
-        public OrderView(Order order, OrderViewModel orderViewModel, ManagerView managerView)
+
+        public OrderView(Order order)
         {
             InitializeComponent();
 
             this.order = order;
             DataContext = order;
-            this.orderViewModel = orderViewModel;
-            this.managerView = managerView;
             this.ResizeMode = ResizeMode.NoResize;
 
             FillDataGrid();
 
+            // Подписываемся на событие редактирования количества товаров
             dataGridOrderProduct.CellEditEnding += dataGridOrderProduct_CellEditEnding;
-            dataGridOrderProduct.LostFocus += dataGridOrderProduct_LostFocus;
-            dataGridOrderProduct.GotFocus += dataGridOrderProduct_LostFocus;
+            dataGridOrderProduct.LoadingRow += dataGridOrderProduct_LoadingRow;
         }
+
         public void FillDataGrid()
         {
             // Загрузка с id товаров и количеством
@@ -135,6 +126,7 @@ namespace IShop_Management.Views
                 return;
             }
         }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             // Проверяем есть ли такой заказ
@@ -144,11 +136,11 @@ namespace IShop_Management.Views
                 LoginView.connection.Open();
 
             int lastOrdId = Convert.ToInt32(sqlGetNewOrdId.ExecuteScalar());
-            // Если нет заказов с таким номер но записываем пустышку в базу
+            // Если нет заказов с таким номером, то записываем пустышку в базу
             if (order.Ord_id > lastOrdId)
             {
                 string insert_string = $@"INSERT INTO orders
-                (ord_name, ord_tel, ord_address, ord_email, ord_comments, ord_date_created, ord_status, cur_id, ord_date_delivereed)
+                (ord_name, ord_tel, ord_address, ord_email, ord_comments, ord_date_created, ord_status, cur_id, ord_date_delivered)
                 VALUES ('', '', '', '', '', '{DateTime.Now}', 0, 0, NULL);";
                 SqlCommand insert_comm = new SqlCommand(insert_string, LoginView.connection);
                 insert_comm.ExecuteNonQuery();
@@ -168,23 +160,12 @@ namespace IShop_Management.Views
 
             var update_da = new SqlDataAdapter(update_comm);
 
-            update_da.SelectCommand.Parameters.Add(new SqlParameter("@ord_name", SqlDbType.NVarChar));
-            update_da.SelectCommand.Parameters["@ord_name"].Value = OrderName.Text;
-
-            update_da.SelectCommand.Parameters.Add(new SqlParameter("@ord_tel", SqlDbType.NVarChar));
-            update_da.SelectCommand.Parameters["@ord_tel"].Value = OrderTel.Text;
-
-            update_da.SelectCommand.Parameters.Add(new SqlParameter("@ord_address", SqlDbType.NVarChar));
-            update_da.SelectCommand.Parameters["@ord_address"].Value = OrderAddress.Text;
-
-            update_da.SelectCommand.Parameters.Add(new SqlParameter("@ord_comments", SqlDbType.NVarChar));
-            update_da.SelectCommand.Parameters["@ord_comments"].Value = OrderComments.Text;
-
-            update_da.SelectCommand.Parameters.Add(new SqlParameter("@ord_status", SqlDbType.Int));
-            update_da.SelectCommand.Parameters["@ord_status"].Value = ComboBoxOrderStatus.SelectedIndex;
-
-            update_da.SelectCommand.Parameters.Add(new SqlParameter("@ord_id", SqlDbType.Int));
-            update_da.SelectCommand.Parameters["@ord_id"].Value = Convert.ToInt32(OderNumber.Text);
+            update_comm.Parameters.AddWithValue("@ord_name", OrderName.Text);
+            update_comm.Parameters.AddWithValue("@ord_tel", OrderTel.Text);
+            update_comm.Parameters.AddWithValue("@ord_address", OrderAddress.Text);
+            update_comm.Parameters.AddWithValue("@ord_comments", OrderComments.Text);
+            update_comm.Parameters.AddWithValue("@ord_status", ComboBoxOrderStatus.SelectedIndex);
+            update_comm.Parameters.AddWithValue("@ord_id", OderNumber.Text);
 
             var update_ds = new DataSet();
             update_da.Fill(update_ds);
@@ -200,10 +181,14 @@ namespace IShop_Management.Views
             m2m_orders_products_sda.UpdateCommand = builder.GetUpdateCommand();
             m2m_orders_products_sda.Update(m2m_orders_products_dt);
 
-            // Обновляем таблицу заказов
-            managerView.datePicker_SelectedDateChanged(sender, e);
             this.Close();
         }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void dataGridOrderProduct_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             OrderCost = 0;
@@ -213,7 +198,8 @@ namespace IShop_Management.Views
                 OrderCost += (double)rowView["summ"];
             }
         }
-        private void dataGridOrderProduct_LostFocus(object sender, RoutedEventArgs e)
+
+        private void dataGridOrderProduct_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             OrderCost = 0;
             foreach (DataRowView rowView in (DataView)dataGridOrderProduct.ItemsSource)
@@ -221,12 +207,8 @@ namespace IShop_Management.Views
                 rowView["summ"] = (int)rowView["op_qty"] * (decimal)rowView["prd_price_out"];
                 OrderCost += (double)rowView["summ"];
             }
-            e.Handled = true;
         }
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+
         private void dataGridOrderProduct_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
@@ -247,6 +229,16 @@ namespace IShop_Management.Views
             }
         }
 
+        public double OrderCost
+        {
+            get { return _orderCost; }
+            set
+            {
+                _orderCost = value;
+                OnPropertyChanged("OrderCost");
+            }
+        }
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -260,5 +252,6 @@ namespace IShop_Management.Views
         }
 
         #endregion
+
     }
 }

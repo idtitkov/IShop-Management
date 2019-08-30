@@ -28,16 +28,15 @@ namespace IShop_Management.Views
         {
             InitializeComponent();
 
+            orderViewModel = new OrderViewModel();
+            DataContext = orderViewModel;
+
             LoadOrders();
+            // деактивируем строку экспорта
+            mainMenuControl.ExportItem.IsEnabled = false;
         }
 
         public void LoadOrders()
-        {
-            orderViewModel = new OrderViewModel();
-            DataContext = orderViewModel;
-        }
-
-        public void datePicker_SelectedDateChanged(object sender, RoutedEventArgs e)
         {
             dataGridNewOrders.ItemsSource = null;
             dataGridActiveOrders.ItemsSource = null;
@@ -52,6 +51,11 @@ namespace IShop_Management.Views
             dataGridAllOrders.ItemsSource = orderViewModel.AllOrders;
         }
 
+        private void datePicker_SelectedDateChanged(object sender, RoutedEventArgs e)
+        {
+            LoadOrders();
+        }
+
         private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGrid grid = sender as DataGrid;
@@ -61,7 +65,7 @@ namespace IShop_Management.Views
             {
                 Order ord = (Order)dgr.Item;
 
-                OrderView orderEdit = new OrderView(ord, orderViewModel, this);
+                OrderView orderEdit = new OrderView(ord);
 
                 orderEdit.Show();
             }
@@ -81,8 +85,14 @@ namespace IShop_Management.Views
             ord.Ord_id++;
             ord.Ord_date_created = DateTime.Now;
 
-            OrderView orderEdit = new OrderView(ord, orderViewModel, this);
+            // Открываем новый заказ с новый id
+            OrderView orderEdit = new OrderView(ord);
             orderEdit.Show();
+        }
+
+        private void WindowActivated(object sender, EventArgs e)
+        {
+            LoadOrders();
         }
     }
 }

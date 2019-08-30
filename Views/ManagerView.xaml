@@ -7,11 +7,12 @@
         xmlns:local="clr-namespace:IShop_Management.Views"
         xmlns:controls="clr-namespace:IShop_Management.Views.Controls"
         mc:Ignorable="d"
+        Activated="WindowActivated"
         WindowStartupLocation="CenterScreen"
-        Title="IShop Management: Sales" Height="450" Width="800">
+        Title="IShop Management: Заказы" Height="450" Width="800">
     <DockPanel>
         <!--Меню-->
-        <controls:MainMenuControl DockPanel.Dock ="Top"/>
+        <controls:MainMenuControl x:Name="mainMenuControl" DockPanel.Dock ="Top"/>
         <!--Строка состояния-->
         <controls:StatusBarControl DockPanel.Dock ="Bottom"/>
         <!--Тулбар-->
@@ -46,11 +47,11 @@
                             <DataGridTextColumn Header="№ заказа" Binding="{Binding Path='Ord_id'}" Width="70"/>
                             <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="120"/>
                             <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="100"/>
-                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="120"/>
-                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="120"/>
-                            <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}" Width="100"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="110"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="110"/>
+                            <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
                             <DataGridTextColumn Header="Номер курьера" Binding="{Binding Path='Cur_id'}"/>
-                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivereed', StringFormat=\{0:dd.MM.yyyy\}}"/>
+                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivered', StringFormat=\{0:dd.MM.yyyy\}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -70,13 +71,13 @@
                     <DataGrid x:Name="dataGridAllOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding AllOrders, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False"  MouseDoubleClick="dataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№ заказа" Binding="{Binding Path='Ord_id'}" Width="70"/>
-                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="110"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="90"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="120"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="100"/>
                             <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="110"/>
                             <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="110"/>
                             <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
                             <DataGridTextColumn Header="Номер курьера" Binding="{Binding Path='Cur_id'}"/>
-                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivereed', StringFormat=\{0:dd.MM.yyyy\}}"/>
+                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivered', StringFormat=\{0:dd.MM.yyyy\}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

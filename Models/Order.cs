@@ -19,7 +19,7 @@ namespace IShop_Management.Models
         private DateTime ord_date_created;
         private int ord_status;
         private int cur_id;
-        private DateTime? ord_date_delivereed;
+        private DateTime? ord_date_delivered;
         public int Ord_id
         {
             get { return ord_id; }
@@ -101,13 +101,13 @@ namespace IShop_Management.Models
                 OnPropertyChanged("Cur_id");
             }
         }
-        public DateTime? Ord_date_delivereed
+        public DateTime? Ord_date_delivered
         {
-            get { return ord_date_delivereed; }
+            get { return ord_date_delivered; }
             set
             {
-                ord_date_delivereed = value;
-                OnPropertyChanged("Ord_date_delivereed");
+                ord_date_delivered = value;
+                OnPropertyChanged("Ord_date_delivered");
             }
         }
 

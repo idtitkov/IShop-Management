@@ -7,8 +7,9 @@
         xmlns:local="clr-namespace:IShop_Management.Views"
         xmlns:controls="clr-namespace:IShop_Management.Views.Controls"
         mc:Ignorable="d"
+        Activated="WindowActivated"
         WindowStartupLocation="CenterScreen"
-        Title="IShop Management: Warehouse" Height="450" Width="800">
+        Title="IShop Management: Склад" Height="450" Width="800">
     <DockPanel>
         <!--Меню-->
         <controls:MainMenuControl DockPanel.Dock ="Top"/>
@@ -64,7 +65,7 @@
                             <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="110"/>
                             <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
                             <DataGridTextColumn Header="Номер курьера" Binding="{Binding Path='Cur_id'}"/>
-                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivereed', StringFormat=\{0:dd.MM.yyyy\}}"/>
+                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivered', StringFormat=\{0:dd.MM.yyyy\}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -78,7 +79,7 @@
                             <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="110"/>
                             <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
                             <DataGridTextColumn Header="Номер курьера" Binding="{Binding Path='Cur_id'}"/>
-                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivereed', StringFormat=\{0:dd.MM.yyyy\}}"/>
+                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivered', StringFormat=\{0:dd.MM.yyyy\}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

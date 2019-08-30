@@ -28,6 +28,8 @@ namespace IShop_Management.Views
             InitializeComponent();
             // получаем строку подключения из app.config
             connectionString = ConfigurationManager.ConnectionStrings["IShopConnection"].ConnectionString;
+            // деактивируем строку экспорта
+            mainMenuControl.ExportItem.IsEnabled = false;
         }
 
         // обработка нажатия на кнопку логина
