@@ -43,7 +43,7 @@ namespace IShop_Management.Views.Controls
             {
                 System.Diagnostics.Process.Start("IShopHelp.html");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show(Window.GetWindow(this), "Не удается найти справочный файл\nПоместите файл \"IShopHelp.html\" в папку с программой.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }

@@ -79,7 +79,7 @@ namespace IShop_Management.Views
                     this.Close();
                     break;
                 case 5:
-                    //okWindow = new WarehouseView();
+                    okWindow = new WarehouseView();
                     okWindow.Show();
                     this.Close();
                     break;

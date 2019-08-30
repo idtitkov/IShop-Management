@@ -1,4 +1,4 @@
-﻿<Window x:Class="IShop_Management.Views.ManagerView"
+﻿<Window x:Class="IShop_Management.Views.WarehouseView"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:IShop_Management.Views.Controls"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="IShop Management: Sales" Height="450" Width="800">
+        Title="IShop Management: Warehouse" Height="450" Width="800">
     <DockPanel>
         <!--Меню-->
         <controls:MainMenuControl DockPanel.Dock ="Top"/>
@@ -16,8 +16,8 @@
         <controls:StatusBarControl DockPanel.Dock ="Bottom"/>
         <!--Тулбар-->
         <ToolBar DockPanel.Dock ="Top">
-            <Button Content="Новый заказ" Click="ButtonNewOrder_Click"/>
-            <Separator />
+            <!--<Button Content="Новый заказ" Click="ButtonNewOrder_Click"/>-->
+            <!--<Separator />-->
             <Label>Показывать заказы с</Label>
             <DatePicker Name="datePickerBegin" IsDropDownOpen="False" SelectedDateFormat="Short" SelectedDate="{Binding BeginDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedDateChanged="datePicker_SelectedDateChanged"/>
             <Label>по</Label>
@@ -28,46 +28,48 @@
         <!--Содержимое окна-->
         <Grid DockPanel.Dock="Top">
             <TabControl>
-                <TabItem Header="Новые">
-                    <DataGrid x:Name="dataGridNewOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding NewOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" MouseDoubleClick="dataGrid_MouseDoubleClick">
+                <TabItem Header="В обработке">
+                    <DataGrid x:Name="dgWActiveOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding ActiveOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" MouseDoubleClick="dgWarehouse_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№ заказа" Binding="{Binding Path='Ord_id'}" Width="70"/>
-                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="120"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="100"/>
-                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="120"/>
-                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="120"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="110"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="90"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="110"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="110"/>
                             <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
+                            <DataGridTextColumn Header="Номер курьера" Binding="{Binding Path='Cur_id'}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
-                <TabItem Header="В обработке">
-                    <DataGrid x:Name="dataGridActiveOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding ActiveOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" MouseDoubleClick="dataGrid_MouseDoubleClick">
+                <TabItem Header="Отмененные">
+                    <DataGrid x:Name="dgWCanceledOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding CanceledOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" MouseDoubleClick="dgWarehouse_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№ заказа" Binding="{Binding Path='Ord_id'}" Width="70"/>
-                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="120"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="100"/>
-                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="120"/>
-                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="120"/>
-                            <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}" Width="100"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="110"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="90"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="110"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="110"/>
+                            <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
+                            <DataGridTextColumn Header="Номер курьера" Binding="{Binding Path='Cur_id'}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Доставленные">
+                    <DataGrid x:Name="dgWDeliveredOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding DeliveredOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" MouseDoubleClick="dgWarehouse_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№ заказа" Binding="{Binding Path='Ord_id'}" Width="70"/>
+                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="110"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="90"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="110"/>
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="110"/>
+                            <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
                             <DataGridTextColumn Header="Номер курьера" Binding="{Binding Path='Cur_id'}"/>
                             <DataGridTextColumn Header="Дата доставки" Binding="{Binding Path='Ord_date_delivereed', StringFormat=\{0:dd.MM.yyyy\}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
-                <TabItem Header="Отмененные">
-                    <DataGrid x:Name="dataGridCanceledOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding CanceledOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" MouseDoubleClick="dataGrid_MouseDoubleClick">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="№ заказа" Binding="{Binding Path='Ord_id'}" Width="70"/>
-                            <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="120"/>
-                            <DataGridTextColumn Header="Телефон" Binding="{Binding Path='Ord_tel'}" Width="100"/>
-                            <DataGridTextColumn Header="Адрес" Binding="{Binding Path='Ord_address'}" Width="120"/>
-                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Path='Ord_comments'}" Width="120"/>
-                            <DataGridTextColumn Header="Дата заказа" Binding="{Binding Path='Ord_date_created', StringFormat=\{0:dd.MM.yyyy\}}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </TabItem>
                 <TabItem Header="Все заказы">
-                    <DataGrid x:Name="dataGridAllOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding AllOrders, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False"  MouseDoubleClick="dataGrid_MouseDoubleClick">
+                    <DataGrid x:Name="dgWAllOrders" IsReadOnly="True" Height="Auto" Width="Auto" ItemsSource="{Binding AllOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False"  MouseDoubleClick="dgWarehouse_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№ заказа" Binding="{Binding Path='Ord_id'}" Width="70"/>
                             <DataGridTextColumn Header="Имя" Binding="{Binding Path='Ord_name'}" Width="110"/>

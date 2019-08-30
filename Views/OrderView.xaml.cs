@@ -54,6 +54,7 @@ namespace IShop_Management.Views
             this.ResizeMode = ResizeMode.NoResize;
 
             FillDataGrid();
+
             dataGridOrderProduct.CellEditEnding += dataGridOrderProduct_CellEditEnding;
             dataGridOrderProduct.LostFocus += dataGridOrderProduct_LostFocus;
             dataGridOrderProduct.GotFocus += dataGridOrderProduct_LostFocus;
@@ -101,16 +102,18 @@ namespace IShop_Management.Views
         private void AddByProdId_Click(object sender, RoutedEventArgs e)
         {
             int prodId;
-            if (textBox_AddProduct.Text == "")
-            {
+            if (!(int.TryParse(textBox_AddProduct.Text, out prodId)))
                 return;
-            }
-            prodId = Convert.ToInt32(textBox_AddProduct.Text);
+            else
+                prodId = Convert.ToInt32(textBox_AddProduct.Text);
 
             string addProdName = $"SELECT prd_name FROM dbo.products WHERE prd_id = {prodId};";
+            string addProdQty = $"SELECT prd_qty FROM dbo.products WHERE prd_id = {prodId};";
             string addProdPrice = $"SELECT prd_price_out FROM dbo.products WHERE prd_id = {prodId};";
             SqlCommand sqAddProdName = new SqlCommand(addProdName, LoginView.connection);
+            SqlCommand sqladdProdQty = new SqlCommand(addProdQty, LoginView.connection);
             SqlCommand sqAddProdPrice = new SqlCommand(addProdPrice, LoginView.connection);
+
             if (LoginView.connection.State == ConnectionState.Closed)
                 LoginView.connection.Open();
 
@@ -119,9 +122,9 @@ namespace IShop_Management.Views
             row["prd_id"] = prodId;
             row["op_qty"] = 1;
             row["prd_name"] = sqAddProdName.ExecuteScalar();
-            row["prd_qty"] = 999;
+            row["prd_qty"] = Convert.ToDecimal(sqladdProdQty.ExecuteScalar()); ;
             row["prd_price_out"] = Convert.ToDecimal(sqAddProdPrice.ExecuteScalar());
-            row["summ"] = 0;
+            row["summ"] = (decimal)row["prd_price_out"];
 
             try
             {
@@ -134,18 +137,19 @@ namespace IShop_Management.Views
         }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверяем еслть ли такой заказ
+            // Проверяем есть ли такой заказ
             string getLastOrdId = $"SELECT MAX(ord_id) FROM dbo.orders;";
             SqlCommand sqlGetNewOrdId = new SqlCommand(getLastOrdId, LoginView.connection);
             if (LoginView.connection.State == ConnectionState.Closed)
                 LoginView.connection.Open();
 
             int lastOrdId = Convert.ToInt32(sqlGetNewOrdId.ExecuteScalar());
+            // Если нет заказов с таким номер но записываем пустышку в базу
             if (order.Ord_id > lastOrdId)
             {
                 string insert_string = $@"INSERT INTO orders
                 (ord_name, ord_tel, ord_address, ord_email, ord_comments, ord_date_created, ord_status, cur_id, ord_date_delivereed)
-                VALUES ('1', '1', '1', '1', '1', '{DateTime.Now}', 0, 0, NULL);";
+                VALUES ('', '', '', '', '', '{DateTime.Now}', 0, 0, NULL);";
                 SqlCommand insert_comm = new SqlCommand(insert_string, LoginView.connection);
                 insert_comm.ExecuteNonQuery();
             }
@@ -254,7 +258,6 @@ namespace IShop_Management.Views
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
 
         #endregion
     }

@@ -23,10 +23,8 @@ namespace IShop_Management.ViewModels
         public ObservableCollection<Order> AllOrders { get; set; }
         public ObservableCollection<Order> NewOrders { get; set; }
         public ObservableCollection<Order> ActiveOrders { get; set; }
+        public ObservableCollection<Order> CanceledOrders { get; set; }
         public ObservableCollection<Order> DeliveredOrders { get; set; }
-
-        public SqlDataAdapter sda;
-        public DataTable dt;
 
         private DateTime _beginDate = DateTime.Today;
         private DateTime _endDate = DateTime.Today;
@@ -43,6 +41,7 @@ namespace IShop_Management.ViewModels
             LoadAllOrders();
             LoadNewOrders();
             LoadActiveOrders();
+            LoadCanceledOrders();
             LoadDeliveredOrders();
         }
 
@@ -50,8 +49,8 @@ namespace IShop_Management.ViewModels
         {
             string loadAllOrders = $"SELECT * FROM dbo.orders WHERE Ord_date_created >= '{_beginDate}' AND Ord_date_created < '{_endDate.AddDays(1)}';";
             SqlCommand cmd = new SqlCommand(loadAllOrders, LoginView.connection);
-            sda = new SqlDataAdapter(cmd);
-            dt = new DataTable();
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
             sda.Fill(dt);
 
             AllOrders = new ObservableCollection<Order>();
@@ -84,71 +83,19 @@ namespace IShop_Management.ViewModels
             ActiveOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_status == 1));
         }
 
+        private void LoadCanceledOrders()
+        {
+            CanceledOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_status == 2));
+        }
+
         private void LoadDeliveredOrders()
         {
-            DeliveredOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_status == 2));
+            DeliveredOrders = new ObservableCollection<Order>(AllOrders.Where(x => x.Ord_status == 3));
         }
 
         // Возможный вариант сохранения
         public void SaveChanges()
         {
-            sda.UpdateCommand = new SqlCommandBuilder(sda).GetUpdateCommand();
-
-            DataTable dt2 = new DataTable();
-            dt2 = ToDataTable<Order>(AllOrders);
-            dt2.PrimaryKey = new DataColumn[] { dt2.Columns["ord_id"] };
-            sda.Update(dt2);
-        }
-
-        // Конвертер
-        public DataTable ToDataTable<T>(ObservableCollection<T> items)
-        {
-            var tb = new DataTable(typeof(T).Name);
-
-            PropertyInfo[] props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-            foreach (PropertyInfo prop in props)
-            {
-                Type t = GetCoreType(prop.PropertyType);
-                tb.Columns.Add(prop.Name, t);
-            }
-
-            foreach (T item in items)
-            {
-                var values = new object[props.Length];
-
-                for (int i = 0; i < props.Length; i++)
-                {
-                    values[i] = props[i].GetValue(item, null);
-                }
-
-                tb.Rows.Add(values);
-            }
-            return tb;
-        }
-
-        public static bool IsNullable(Type t)
-        {
-            return !t.IsValueType || (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>));
-        }
-
-        public static Type GetCoreType(Type t)
-        {
-            if (t != null && IsNullable(t))
-            {
-                if (!t.IsValueType)
-                {
-                    return t;
-                }
-                else
-                {
-                    return Nullable.GetUnderlyingType(t);
-                }
-            }
-            else
-            {
-                return t;
-            }
         }
 
         public DateTime BeginDate
