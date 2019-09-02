@@ -127,6 +127,7 @@ namespace IShop_Management.Views
             }
         }
 
+        // Сохранение всех изменений
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             // Проверяем есть ли такой заказ
@@ -155,9 +156,7 @@ namespace IShop_Management.Views
                 ord_comments = @ord_comments,
                 ord_status = @ord_status
                 WHERE ord_id = @ord_id;";
-
             update_comm.Connection = LoginView.connection;
-
             var update_da = new SqlDataAdapter(update_comm);
 
             update_comm.Parameters.AddWithValue("@ord_name", OrderName.Text);
@@ -170,7 +169,7 @@ namespace IShop_Management.Views
             var update_ds = new DataSet();
             update_da.Fill(update_ds);
 
-            // Делим и сохраняем деленную таблицу с количеством заказов
+            // Делим и сохраняем поделенную таблицу с количеством заказов
             m2m_orders_products_dt = mergedDT.Copy();
             m2m_orders_products_dt.Columns.Remove("prd_name");
             m2m_orders_products_dt.Columns.Remove("prd_qty");
@@ -252,6 +251,5 @@ namespace IShop_Management.Views
         }
 
         #endregion
-
     }
 }

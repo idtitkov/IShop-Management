@@ -95,12 +95,6 @@
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ContentEditWindow.xaml.cs">
-      <DependentUpon>ContentEditWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ContentWindow.xaml.cs">
-      <DependentUpon>ContentWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Controls\MainMenuControl.xaml.cs">
       <DependentUpon>MainMenuControl.xaml</DependentUpon>
     </Compile>
@@ -124,14 +118,6 @@
       <DependentUpon>WarehouseView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AboutView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ContentEditWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ContentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

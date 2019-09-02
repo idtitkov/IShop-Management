@@ -71,7 +71,7 @@ namespace IShop_Management.Views
                     this.Close();
                     break;
                 case 3:
-                    okWindow = new ContentWindow();
+                    //okWindow = new ContentView();
                     okWindow.Show();
                     this.Close();
                     break;
@@ -89,7 +89,6 @@ namespace IShop_Management.Views
                     MessageBox.Show(this, "Неправильное имя пользователя или пароль.\nПовторите попытку или обратитесь к администратору.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     break;
             }
-
         }
     }
 }
