@@ -1,21 +1,11 @@
 ﻿using IShop_Management.Models;
-using IShop_Management.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace IShop_Management.Views
 {
@@ -46,11 +36,12 @@ namespace IShop_Management.Views
             FillDataGrid();
 
             // Подписываемся на событие редактирования количества товаров
-            dataGridOrderProduct.CellEditEnding += dataGridOrderProduct_CellEditEnding;
-            dataGridOrderProduct.LoadingRow += dataGridOrderProduct_LoadingRow;
+            dataGridOrderProduct.CellEditEnding += Items_CurrentChanged;
+            dataGridOrderProduct.LoadingRow += Items_CurrentChanged;
+            dataGridOrderProduct.Items.CurrentChanged += Items_CurrentChanged;
         }
 
-        public void FillDataGrid()
+        private void FillDataGrid()
         {
             // Загрузка с id товаров и количеством
             string loadAllOrders = $"SELECT * FROM dbo.m2m_orders_products WHERE ord_id = {order.Ord_id};";
@@ -118,8 +109,11 @@ namespace IShop_Management.Views
             row["summ"] = (decimal)row["prd_price_out"];
 
             try
-            {
-                mergedDT.Rows.Add(row);
+            {   // Не добавляем пустую строку
+                if (row["prd_name"] != DBNull.Value)
+                {
+                    mergedDT.Rows.Add(row);
+                }
             }
             catch (Exception)
             {
@@ -188,17 +182,7 @@ namespace IShop_Management.Views
             this.Close();
         }
 
-        private void dataGridOrderProduct_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            OrderCost = 0;
-            foreach (DataRowView rowView in (DataView)dataGridOrderProduct.ItemsSource)
-            {
-                rowView["summ"] = (int)rowView["op_qty"] * (decimal)rowView["prd_price_out"];
-                OrderCost += (double)rowView["summ"];
-            }
-        }
-
-        private void dataGridOrderProduct_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void Items_CurrentChanged(object sender, EventArgs e)
         {
             OrderCost = 0;
             foreach (DataRowView rowView in (DataView)dataGridOrderProduct.ItemsSource)

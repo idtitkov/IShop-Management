@@ -1,20 +1,12 @@
 ﻿using IShop_Management.Models;
 using IShop_Management.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace IShop_Management.Views
 {
@@ -32,11 +24,15 @@ namespace IShop_Management.Views
             DataContext = orderViewModel;
 
             LoadOrders();
-            // деактивируем строку экспорта
-            mainMenuControl.ExportItem.IsEnabled = false;
+
+            // Обновление окна по таймеру
+            var dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(WindowActivated);
+            dispatcherTimer.Interval = new TimeSpan(0, 5, 0);
+            dispatcherTimer.Start();
         }
 
-        public void LoadOrders()
+        private void LoadOrders()
         {
             dataGridNewOrders.ItemsSource = null;
             dataGridActiveOrders.ItemsSource = null;
@@ -71,6 +67,7 @@ namespace IShop_Management.Views
             }
         }
 
+        // Создание нового заказа
         private void ButtonNewOrder_Click(object sender, RoutedEventArgs e)
         {
             // Получение максимального номера заказа
@@ -90,6 +87,7 @@ namespace IShop_Management.Views
             orderEdit.Show();
         }
 
+        // Обновление заказов при возвращении фокуса в окно
         private void WindowActivated(object sender, EventArgs e)
         {
             LoadOrders();

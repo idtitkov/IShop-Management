@@ -1,11 +1,105 @@
 ﻿<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <title>IShop Management: Справка</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        a {
+            line-height: 0.5;
+        }
+
+        li {
+            float: left;
+        }
+
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+                li a:hover:not(.active) {
+                    background-color: #111;
+                }
+
+        .active {
+            background-color: #4CAF50;
+        }
+    </style>
 </head>
 <body>
 
+    <ul>
+        <li><a class="active" href="#main" id="main">Главное</a></li>
+        <li><a href="#sales" id="sales">Продажи</a></li>
+        <li><a href="#warehouse" id="warehouse">Склад</a></li>
+    </ul>
+
+    <div style="padding:20px;margin-top:30px;background-color:#1abc9c;height:1500px;">
+        <a id="maintext">
+            <h2>Запуск программы</h2>
+            <p>1. Запустите файл "IShop Management.exe".</p>
+            <p>2. Введите свои имя пользователя и пароль.</p>
+            <h4>При появлении ошибки немедленно обратитесь к администратору.</h4>
+        </a>
+        <a id="salestext" hidden>
+            <h2>Продажи</h2>
+            <h4>Заказы обрабатываются сверху вниз, т.е. по новизне, начиная со старших.</h4>
+            <h4>Позвонив по указанному в заказе номеру необходимо: </h4>
+            <p>1) Поздороваться ("Доброе утро/день/вечер").</p>
+            <p>2) Удостовериться, что у телефона заказчик ("Это Олег Иванович?/Ирина?" и т.п.).</p>
+            <p>3) Представится ("Интернет-магазин "такой-то", звоним по вашему заказу.").</p>
+            <p>4) Сверить содержание заказа и его итоговую сумму.</p>
+            <p>5) Сверить адрес и желаемое время заказа.</p>
+            <p>6) Попрощаться ("До свидания, ожидайте звонка курьера", "Хорошего дня" и т.п.).</p>
+            <p>7) Перевести заказ из статуса "Новый" в статус "В обработке".</p>
+            <h4>При отмене заказа:</h4>
+            <p>1) Уточнить причину отмена заказа.</p>
+            <p>2) Попытаться переубедить клиента.</p>
+            <p>3) При невыполнимости п.2 перевести заказ в статус "Отменен".</p>
+        </a>
+        <a id="warehousetext" hidden>
+            <h2>Склад</h2>
+            <h4>Заказы обрабатываются сверху вниз, т.е. по новизне, начиная со старших.</h4>
+            <p>1) На основани курьерского отчета на начало дня, установите доставленные заказы в статус "Доставлен".</p>
+            <p>2) Переходите обработке новых заказов в статусе "В обработке".</p>
+            <p>3) Откройте заказ.</p>
+            <p>4) Удостоверьтесь в наличии товара на складе.</p>
+            <p>5) В соответствии с адресом установите курьера, обслуживающего район.</p>
+        </a>
+    </div>
+    <script type="text/javascript">
+        document.getElementById("main").onclick = function () {
+            document.getElementById("maintext").style.display = "block";
+            document.getElementById("salestext").style.display = "none";
+            document.getElementById("warehousetext").style.display = "none";
+        }
+        document.getElementById("sales").onclick = function () {
+            document.getElementById("maintext").style.display = "none";
+            document.getElementById("salestext").style.display = "block";
+            document.getElementById("warehousetext").style.display = "none";
+        }
+        document.getElementById("warehouse").onclick = function () {
+            document.getElementById("maintext").style.display = "none";
+            document.getElementById("salestext").style.display = "none";
+            document.getElementById("warehousetext").style.display = "block";
+        }
+    </script>
 </body>
 </html>

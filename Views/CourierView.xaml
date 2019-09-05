@@ -33,9 +33,9 @@
             <Label Content="Сумма заказа" HorizontalAlignment="Left" Margin="546,64,0,0" VerticalAlignment="Top"/>
             <Label x:Name="labelOrderCost" HorizontalAlignment="Left" Margin="657,64,0,0" VerticalAlignment="Top" Width="98" Height="26" Content="{Binding OrderCost, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Mode=TwoWay, UpdateSourceTrigger=Explicit}"/>
             <Label Content="Адрес" HorizontalAlignment="Left" Margin="32,104,0,0" VerticalAlignment="Top" Width="104"/>
-            <TextBox x:Name="OrderAddress" HorizontalAlignment="Left" Margin="141,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="614" Height="26" Text="{Binding Path=Ord_address, Mode=TwoWay}"/>
+            <TextBox x:Name="OrderAddress" HorizontalAlignment="Left" Margin="141,104,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="614" Height="26" MaxLength="128" Text="{Binding Path=Ord_address, Mode=TwoWay}"/>
             <Label Content="Комментарий" HorizontalAlignment="Left" Margin="32,144,0,0" VerticalAlignment="Top" Width="104"/>
-            <TextBox x:Name="OrderComments" HorizontalAlignment="Left" Margin="141,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="614" Height="26" Text="{Binding Path=Ord_comments, Mode=TwoWay}"/>
+            <TextBox x:Name="OrderComments" HorizontalAlignment="Left" Margin="141,144,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="614" Height="26" MaxLength="256" Text="{Binding Path=Ord_comments, Mode=TwoWay}"/>
             <DataGrid x:Name="dataGridOrderProduct" Height="Auto" Width="Auto" AutoGenerateColumns="False" CanUserAddRows="False" Margin="32,192,37,170" ItemsSource="{Binding}" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Код товара" IsReadOnly="True" Binding="{Binding 'prd_id'}"/>

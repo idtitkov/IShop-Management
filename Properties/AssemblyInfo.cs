@@ -8,7 +8,7 @@ using System.Windows;
 // набор атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
 [assembly: AssemblyTitle("IShop Management")]
-[assembly: AssemblyDescription("Дипломный проект на тему <<Разработка приложения для автоматизации работы интернет-магазина цифровой техники>>.")]
+[assembly: AssemblyDescription("Курсовой проект на тему <<Разработка приложения для автоматизации работы интернет-магазина цифровой техники>>.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ИТИУ БГУ")]
 [assembly: AssemblyProduct("IShop Management")]

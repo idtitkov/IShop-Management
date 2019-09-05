@@ -28,7 +28,18 @@ namespace IShop_Management.Views.Controls
 
         public void menuItemExit_Click(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            try
+            {
+                LoginView.connection.Close();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                Environment.Exit(0);
+            }
+
         }
 
         private void menuItemAbout_Click(object sender, RoutedEventArgs e)
@@ -45,7 +56,7 @@ namespace IShop_Management.Views.Controls
             }
             catch (Exception)
             {
-                MessageBox.Show(Window.GetWindow(this), "Не удается найти справочный файл\nПоместите файл \"IShopHelp.html\" в папку с программой.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Window.GetWindow(this), "Не удается найти файл справки.\nПоместите файл \"IShopHelp.html\" в папку с программой.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }
