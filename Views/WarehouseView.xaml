@@ -20,11 +20,12 @@
             <!--<Button Content="Новый заказ" Click="ButtonNewOrder_Click"/>-->
             <!--<Separator />-->
             <Label>Показывать заказы с</Label>
-            <DatePicker Name="datePickerBegin" IsDropDownOpen="False" SelectedDateFormat="Short" SelectedDate="{Binding BeginDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedDateChanged="datePicker_SelectedDateChanged"/>
+            <DatePicker Name="datePickerBegin" IsDropDownOpen="False" SelectedDateFormat="Short" SelectedDate="{Binding BeginDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedDateChanged="datePicker_SelectedDateChanged" Width="100"/>
             <Label>по</Label>
-            <DatePicker Name="datePickerEnd" IsDropDownOpen="False" SelectedDateFormat="Short" SelectedDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedDateChanged="datePicker_SelectedDateChanged"/>
+            <DatePicker Name="datePickerEnd" IsDropDownOpen="False" SelectedDateFormat="Short" SelectedDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedDateChanged="datePicker_SelectedDateChanged" Width="100"/>
             <Separator />
-            <!--<TextBox Foreground="LightGray" Width="250">Поиск по номеру телефона или адресу...</TextBox>-->
+            <TextBox x:Name="texbox_Search" Width="240"></TextBox>
+            <Button x:Name="button_Search" VerticalAlignment="Bottom" Height="26" Click="Button_Search_Click">Поиск по № телефона</Button>
         </ToolBar>
         <!--Содержимое окна-->
         <Grid DockPanel.Dock="Top">

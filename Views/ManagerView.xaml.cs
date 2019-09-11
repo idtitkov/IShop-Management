@@ -1,10 +1,14 @@
 ﻿using IShop_Management.Models;
 using IShop_Management.ViewModels;
 using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 
@@ -85,6 +89,22 @@ namespace IShop_Management.Views
             // Открываем новый заказ с новый id
             OrderView orderEdit = new OrderView(ord);
             orderEdit.Show();
+        }
+
+        // Поиск заказов
+        private void Button_Search_Click(object sender, RoutedEventArgs e)
+        {
+            var filteredNewOrders = new ObservableCollection<Order>(from item in orderViewModel.NewOrders where item.Ord_tel.Contains(texbox_Search.Text) select item);
+            dataGridNewOrders.ItemsSource = filteredNewOrders;
+
+            var filteredActiveOrders = new ObservableCollection<Order>(from item in orderViewModel.ActiveOrders where item.Ord_tel.Contains(texbox_Search.Text) select item);
+            dataGridActiveOrders.ItemsSource = filteredActiveOrders;
+
+            var filteredCanceledOrders = new ObservableCollection<Order>(from item in orderViewModel.CanceledOrders where item.Ord_tel.Contains(texbox_Search.Text) select item);
+            dataGridCanceledOrders.ItemsSource = filteredCanceledOrders;
+
+            var filteredAllOrders = new ObservableCollection<Order>(from item in orderViewModel.AllOrders where item.Ord_tel.Contains(texbox_Search.Text) select item);
+            dataGridAllOrders.ItemsSource = filteredAllOrders;
         }
 
         // Обновление заказов при возвращении фокуса в окно

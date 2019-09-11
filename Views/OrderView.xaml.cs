@@ -35,10 +35,11 @@ namespace IShop_Management.Views
 
             FillDataGrid();
 
-            // Подписываемся на событие редактирования количества товаров
-            dataGridOrderProduct.CellEditEnding += Items_CurrentChanged;
-            dataGridOrderProduct.LoadingRow += Items_CurrentChanged;
-            dataGridOrderProduct.Items.CurrentChanged += Items_CurrentChanged;
+            // Обновляем сумму заказа каждую секунду
+            var dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(Items_CurrentChanged);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
         }
 
         private void FillDataGrid()
@@ -212,6 +213,26 @@ namespace IShop_Management.Views
             }
         }
 
+        // Добавление товара по названию
+        private void Button_FindByName_Click(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrEmpty(textBox_FindByName.Text))
+                return;
+            try
+            {
+                FindByNameWindow findByNameWindow = new FindByNameWindow(textBox_FindByName.Text);
+                findByNameWindow.ProdId += value =>
+                {
+                    textBox_AddProduct.Text = value;
+                    AddByProdId_Click(sender, e);
+                };
+                findByNameWindow.ShowDialog();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
         public double OrderCost
         {
             get { return _orderCost; }
@@ -219,6 +240,22 @@ namespace IShop_Management.Views
             {
                 _orderCost = value;
                 OnPropertyChanged("OrderCost");
+            }
+        }
+
+        private void textBox_AddProduct_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                AddByProdId_Click(this, e);
+            }
+        }
+
+        private void textBox_FindByName_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Button_FindByName_Click(this, e);
             }
         }
 

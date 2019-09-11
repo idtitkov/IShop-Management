@@ -7,7 +7,8 @@
         xmlns:controls="clr-namespace:IShop_Management.Views.Controls"
         mc:Ignorable="d"
         Title="IShop Management: Детали заказа" Height="560" Width="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <DockPanel>
         <!--Меню-->
         <controls:MainMenuControl x:Name="mainMenuControl" DockPanel.Dock ="Top"/>
@@ -46,10 +47,13 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Label Content="Добавить товар по коду" HorizontalAlignment="Left" Margin="32,382,0,0" VerticalAlignment="Top" Width="145"/>
-            <TextBox x:Name="textBox_AddProduct" HorizontalAlignment="Left" Height="26" Margin="182,382,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="97"/>
-            <Button Content="Добавить" HorizontalAlignment="Left" Margin="289,382,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="AddByProdId_Click" RenderTransformOrigin="0.507,0.115"/>
+            <TextBox x:Name="textBox_AddProduct" HorizontalAlignment="Left" Height="26" Margin="182,382,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="54" KeyDown="textBox_AddProduct_PreviewKeyDown"/>
+            <Button x:Name="button_AddProdByID" Content="Добавить" HorizontalAlignment="Left" Margin="241,382,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="AddByProdId_Click" RenderTransformOrigin="0.507,0.115"/>
+            <Label Content="Поиск по названию" HorizontalAlignment="Left" Height="26" Margin="382,382,0,0" VerticalAlignment="Top" Width="125"/>
+            <TextBox x:Name="textBox_FindByName" HorizontalAlignment="Left" Height="26" Margin="507,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" MaxLength="32" KeyDown="textBox_FindByName_PreviewKeyDown"/>
+            <Button x:Name="button_FindByName" Content="Искать" HorizontalAlignment="Left" Height="26" Margin="681,382,0,0" VerticalAlignment="Top" Width="74" Click="Button_FindByName_Click"/>
             <Button x:Name="SaveOrderButton" Content="Сохранить" HorizontalAlignment="Left" Margin="152,445,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="SaveButton_Click"/>
-            <Button Content="Отмена" HorizontalAlignment="Left" Margin="526,445,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="CancelButton_Click"/>
+            <Button Content="Отмена" HorizontalAlignment="Left" Margin="526,445,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="CancelButton_Click" IsCancel="True"/>
         </Grid>
     </DockPanel>
 </Window>

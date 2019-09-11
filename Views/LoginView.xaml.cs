@@ -47,7 +47,7 @@ namespace IShop_Management.Views
                         this.Close();
                         break;
                     case 3:
-                        //okWindow = new ContentView();
+                        okWindow = new ContentView();
                         okWindow.Show();
                         this.Close();
                         break;

@@ -1,0 +1,25 @@
+﻿<Window x:Class="IShop_Management.Views.FindByNameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IShop_Management.Views"
+        mc:Ignorable="d"
+        Title="Поиск товара по названию" Height="250" Width="560"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DataGrid x:Name="dataGrid_FindByName" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto" AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding}" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="column_ProdId" Header="Код товара" IsReadOnly="True" Binding="{Binding 'prd_id'}" Width="75"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding 'prd_name'}" Width="Auto" MaxWidth="350"/>
+                <DataGridTextColumn Header="Цена за 1 шт." IsReadOnly="True" Binding="{Binding 'prd_price_out'}" Width="85"/>
+                <DataGridTextColumn Header="Количество на складе" IsReadOnly="True" Binding="{Binding 'prd_qty'}" Width="130"/>
+            </DataGrid.Columns>
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
+        </DataGrid>
+    </Grid>
+</Window>
