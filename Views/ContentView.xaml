@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:IShop_Management.Views"
         xmlns:controls="clr-namespace:IShop_Management.Views.Controls"
         mc:Ignorable="d"
+        Activated="WindowActivated"
         WindowStartupLocation="CenterScreen"
         Title="IShop Management: Контент" Height="450" Width="800">
     <DockPanel>
@@ -15,7 +16,9 @@
         <controls:StatusBarControl DockPanel.Dock ="Bottom"/>
         <!--Тулбар-->
         <ToolBar DockPanel.Dock ="Top">
-            <TextBox x:Name="texbox_ProdId" Width="160"></TextBox>
+            <Button VerticalAlignment="Top" Height="26" Click="NewProduct_Click">Новый товар</Button>
+            <Separator/>
+            <TextBox x:Name="texbox_ProdId" Width="100"></TextBox>
             <Button VerticalAlignment="Bottom" Height="26" Click="SearchById_Click">Поиск по коду товара</Button>
             <Separator/>
             <TextBox x:Name="texbox_ProdName" Width="160"></TextBox>
@@ -23,12 +26,12 @@
         </ToolBar>
         <!--Содержимое окна-->
         <Grid DockPanel.Dock="Top">
-            <DataGrid x:Name="dataGrid_Content" VerticalAlignment="Top" Height="Auto" Width="Auto" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" MouseDoubleClick="dataGridContent_MouseDoubleClick">
+            <DataGrid x:Name="dataGrid_Content" VerticalAlignment="Top" Height="Auto" Width="Auto" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" MouseDoubleClick="dataGridContent_MouseDoubleClick" PreviewKeyDown="dataGrid_Content_PreviewKeyDown">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Код товара" Binding="{Binding Path='prd_id'}" Width="100"/>
-                    <DataGridTextColumn Header="Название" Binding="{Binding Path='prd_name'}" Width="200"/>
-                    <DataGridTextColumn Header="Категория" Binding="{Binding Path='cat_name'}" Width="120"/>
-                    <DataGridTextColumn Header="Описание" Binding="{Binding Path='prd_descr'}" MaxWidth="330"/>
+                    <DataGridTextColumn Header="Код товара" Binding="{Binding Path='prd_id', Mode=TwoWay}" Width="100"/>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Path='prd_name', Mode=TwoWay}" Width="200"/>
+                    <DataGridTextColumn Header="Категория" Binding="{Binding Path='cat_name', Mode=TwoWay}" Width="120"/>
+                    <DataGridTextColumn Header="Описание" Binding="{Binding Path='prd_descr', Mode=TwoWay}" MaxWidth="330"/>
                 </DataGrid.Columns>
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
