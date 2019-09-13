@@ -33,6 +33,9 @@ namespace IShop_Management.Views
 
             FillDataGrid();
             LoadCouriers();
+
+            mainMenuControl.ExportItem.IsEnabled = true;
+            mainMenuControl.ExportItem.Click += ExportItem_Click;
         }
 
         private void FillDataGrid()
@@ -135,6 +138,71 @@ namespace IShop_Management.Views
             }
         }
 
+        // Экспорт
+        private void ExportItem_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Office.Interop.Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
+            ExcelApp.Application.Workbooks.Add(Type.Missing);
+            ExcelApp.Columns.ColumnWidth = 20;
+
+            ExcelApp.Cells.Range["A1:D2"].Borders.Weight = 2d;
+            ExcelApp.Cells.Range["A3:B5"].Borders.Weight = 2d;
+            ExcelApp.Cells.Range["A7:E7"].Borders.Weight = 3d;
+
+            ExcelApp.Cells[1, 1] = "Имя курьера";
+            ExcelApp.Cells[1, 2] = cbCouriers.SelectedValue;
+
+            ExcelApp.Cells[1, 3] = "Номер заказа";
+            ExcelApp.Cells[1, 4].NumberFormat = "@";
+            ExcelApp.Cells[1, 4] = OderNumber.Text;
+
+            ExcelApp.Cells[2, 1] = "Номер телефона";
+            ExcelApp.Cells[2, 2].NumberFormat = "@";
+            ExcelApp.Cells[2, 2] = OrderTel.Text;
+
+            ExcelApp.Cells[2, 3] = "Имя заказчика";
+            ExcelApp.Cells[2, 4] = OrderName.Text;
+
+            ExcelApp.Cells[3, 1] = "Адрес";
+            ExcelApp.Cells[3, 2] = OrderAddress.Text;
+
+            ExcelApp.Cells[4, 1] = "Комментарий";
+            ExcelApp.Cells[4, 2] = OrderComments.Text;
+
+            ExcelApp.Cells[5, 1] = "Сумма заказа";
+            ExcelApp.Cells[5, 2] = labelOrderCost.Content + " руб.";
+
+            // Заголовок
+            for (int i = 0; i < dataGridOrderProduct.Columns.Count - 1; i++)
+            {
+                ExcelApp.Cells[7, (i + 1)] = dataGridOrderProduct.Columns[i].Header;
+                ExcelApp.Cells[7, (i + 1)].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            }
+
+            // Строки
+            int row = 8;
+            foreach (DataRowView dr in dataGridOrderProduct.ItemsSource)
+            {
+                var cell1 = ExcelApp.Cells[row, 1];
+                var cell2 = ExcelApp.Cells[row, 5];
+
+                ExcelApp.Cells[row, 1] = dr[1];
+                ExcelApp.Cells[row, 2] = dr[3];
+                ExcelApp.Cells[row, 3] = dr[5] + " руб.";
+                ExcelApp.Cells[row, 4] = dr[2] + " шт.";
+                ExcelApp.Cells[row, 5] = dr[6] + " руб.";
+
+                ExcelApp.Range[cell1, cell2].Borders.Weight = 2d;
+                ExcelApp.Range[cell1, cell2].WrapText = true;
+                ExcelApp.Range[cell1, cell2].Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+                ExcelApp.Range[cell1, cell2].Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+                row++;
+            }
+
+            ExcelApp.Visible = true;
+        }
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -149,4 +217,3 @@ namespace IShop_Management.Views
 
         #endregion
     }
-}

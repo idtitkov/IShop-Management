@@ -7,7 +7,7 @@
              mc:Ignorable="d" >
     <Menu x:Name="menuBar">
         <MenuItem Header="Файл">
-            <MenuItem x:Name="ExportItem" IsEnabled="False" Header="Экспорт" ></MenuItem>
+            <MenuItem x:Name="ExportItem" IsEnabled="False" Header="Экспорт"></MenuItem>
             <Separator />
             <MenuItem Header="Выход" Click="menuItemExit_Click" ></MenuItem>
         </MenuItem>
