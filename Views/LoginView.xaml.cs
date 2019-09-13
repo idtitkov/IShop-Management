@@ -11,6 +11,7 @@ namespace IShop_Management.Views
     {
         public static string connectionString;
         public static SqlConnection connection;
+        private Window okWindow;
         public LoginView()
         {
             InitializeComponent();
@@ -33,7 +34,6 @@ namespace IShop_Management.Views
                 userType = (int?)checkCredentials.ExecuteScalar();
 
                 // выбор рабочего окна в зависимости от типа пользователя
-                Window okWindow = null;
                 switch (userType)
                 {
                     case 1:
@@ -52,7 +52,7 @@ namespace IShop_Management.Views
                         this.Close();
                         break;
                     case 4:
-                        //okWindow = new BuyerView();
+                        okWindow = new BuyView();
                         okWindow.Show();
                         this.Close();
                         break;
@@ -66,7 +66,7 @@ namespace IShop_Management.Views
                         break;
                 }
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 MessageBox.Show(this, "Соединение с сервером отсутствует\nОбратитесь к администратору.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }

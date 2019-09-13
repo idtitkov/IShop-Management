@@ -24,7 +24,7 @@
             <Image Source="pack://application:,,,/StartUpProject/Images/IShop_logo.png" HorizontalAlignment="Left" Height="100" Margin="86,75,0,0" VerticalAlignment="Top" Width="100"/>
             <Label VerticalAlignment="Top" Margin="220,75,244,0">Имя пользователя</Label>
             <Label VerticalAlignment="Top" Margin="220,135,244,0" RenderTransformOrigin="1.648,0.731">Пароль</Label>
-            <TextBox Height="26" HorizontalAlignment="Left" Margin="348,79,0,0" Name="textBoxLogin" VerticalAlignment="Top" Width="96" Text="content" TextWrapping="NoWrap" MaxLength="16"/>
+            <TextBox Height="26" HorizontalAlignment="Left" Margin="348,79,0,0" Name="textBoxLogin" VerticalAlignment="Top" Width="96" Text="buy" TextWrapping="NoWrap" MaxLength="16"/>
             <PasswordBox Height="26" HorizontalAlignment="Left" Margin="348,135,0,0" Name="passwordBoxLogin" VerticalAlignment="Top" Width="96" Password="123" MaxLength="32"/>
             <Button Content="Вход" Height="23" HorizontalAlignment="Left" Margin="240,198,0,0" Name="buttonLogin" VerticalAlignment="Top" Width="100" Click="buttonLogin_Click" />
         </Grid>

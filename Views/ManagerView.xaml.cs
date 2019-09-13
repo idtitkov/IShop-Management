@@ -75,7 +75,7 @@ namespace IShop_Management.Views
         private void ButtonNewOrder_Click(object sender, RoutedEventArgs e)
         {
             // Получение максимального номера заказа
-            string getNewOrdId = $"SELECT MAX(ord_id) FROM dbo.orders;";
+            string getNewOrdId = $"SELECT IDENT_CURRENT('dbo.orders');";
             SqlCommand sqlGetNewOrdId = new SqlCommand(getNewOrdId, LoginView.connection);
             if (LoginView.connection.State == ConnectionState.Closed)
                 LoginView.connection.Open();
