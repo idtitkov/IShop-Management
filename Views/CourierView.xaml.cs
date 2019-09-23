@@ -217,3 +217,4 @@ namespace IShop_Management.Views
 
         #endregion
     }
+}

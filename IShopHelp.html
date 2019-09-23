@@ -49,6 +49,8 @@
         <li><a class="active" href="#main" id="main">Главное</a></li>
         <li><a href="#sales" id="sales">Продажи</a></li>
         <li><a href="#warehouse" id="warehouse">Склад</a></li>
+        <li><a href="#content" id="content">Контент</a></li>
+        <li><a href="#buyer" id="buyer">Закупки</a></li>
     </ul>
 
     <div style="padding:20px;margin-top:30px;background-color:#1abc9c;height:1500px;">
@@ -83,22 +85,50 @@
             <p>4) Удостоверьтесь в наличии товара на складе.</p>
             <p>5) В соответствии с адресом установите курьера, обслуживающего район.</p>
         </a>
+        <a id="contenttext" hidden>
+            <h2>Контент</h2>
+            <h4>Инструкция для контент-менеджеров.</h4>
+        </a>
+        <a id="buyertext" hidden>
+            <h2>Закупки</h2>
+            <h4>Инструкция для менеджеров по закупкам.</h4>
+        </a>
     </div>
     <script type="text/javascript">
         document.getElementById("main").onclick = function () {
             document.getElementById("maintext").style.display = "block";
             document.getElementById("salestext").style.display = "none";
             document.getElementById("warehousetext").style.display = "none";
+            document.getElementById("contenttext").style.display = "none";
+            document.getElementById("buyertext").style.display = "none";
         }
         document.getElementById("sales").onclick = function () {
             document.getElementById("maintext").style.display = "none";
             document.getElementById("salestext").style.display = "block";
             document.getElementById("warehousetext").style.display = "none";
+            document.getElementById("contenttext").style.display = "none";
+            document.getElementById("buyertext").style.display = "none";
         }
         document.getElementById("warehouse").onclick = function () {
             document.getElementById("maintext").style.display = "none";
             document.getElementById("salestext").style.display = "none";
             document.getElementById("warehousetext").style.display = "block";
+            document.getElementById("contenttext").style.display = "none";
+            document.getElementById("buyertext").style.display = "none";
+        }
+        document.getElementById("content").onclick = function () {
+            document.getElementById("maintext").style.display = "none";
+            document.getElementById("salestext").style.display = "none";
+            document.getElementById("warehousetext").style.display = "none";
+            document.getElementById("contenttext").style.display = "block";
+            document.getElementById("buyertext").style.display = "none";
+        }
+        document.getElementById("buyer").onclick = function () {
+            document.getElementById("maintext").style.display = "none";
+            document.getElementById("salestext").style.display = "none";
+            document.getElementById("warehousetext").style.display = "none";
+            document.getElementById("contenttext").style.display = "none";
+            document.getElementById("buyertext").style.display = "block";
         }
     </script>
 </body>

@@ -125,6 +125,17 @@ namespace IShop_Management.Views
         // Сохранение всех изменений
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // Обработка превышения количества товаров
+            foreach (DataRowView dr in dataGridOrderProduct.ItemsSource)
+            {
+                if (Convert.ToInt32(dr[2].ToString()) > Convert.ToInt32(dr[4].ToString()))
+                {
+                    MessageBox.Show(this, "Количество товаров в заказе превышает складские запасы.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                    return;
+                }
+            }
+
             // Проверяем есть ли такой заказ
             string getLastOrdId = $"SELECT MAX(ord_id) FROM dbo.orders;";
             SqlCommand sqlGetNewOrdId = new SqlCommand(getLastOrdId, LoginView.connection);
